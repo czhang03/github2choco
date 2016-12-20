@@ -4,7 +4,7 @@ the insane way to create and manage your chocolatey package
 
 **Please notice this package is still under development**
 
-## dependency
+## Dependency
 
 This module requires [PSGitHub](https://github.com/pcgeek86/PSGitHub).
 
@@ -18,7 +18,7 @@ you can set it up with the following command:
 ❯ Set-GitHubToken
 ```
 
-## Create package
+## Create Package
 
 creating a package is super easy:
 
@@ -82,7 +82,7 @@ just
 ```
 
 
-## Manage Existing package
+## Manage Existing Package
 
 ### 1. update
 
