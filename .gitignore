@@ -1,0 +1,4 @@
+*.swp
+.vscode
+profile.json
+.vs
