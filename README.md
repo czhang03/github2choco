@@ -4,6 +4,20 @@ the insane way to create and manage your chocolatey package
 
 **Please notice this package is still under development**
 
+## dependency
+
+This module requires [PSGitHub](https://github.com/pcgeek86/PSGitHub).
+
+you can set it up with the following command:
+
+``` 
+❯ Install-Module PSGitHub
+
+❯ Import-Module PSGitHub
+
+❯ Set-GitHubToken
+```
+
 ## Create package
 
 creating a package is super easy:
