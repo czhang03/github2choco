@@ -31,7 +31,7 @@ example:
 ### 2. Create the package path
 
 ```
-mkdir rocketchatelectron-choco
+❯ mkdir rocketchatelectron-choco
 ```
 
 ### 3. Create the template via `choco new`
@@ -44,7 +44,7 @@ mkdir rocketchatelectron-choco
 ### 4. Edit the template
 
 ```
-code rocket.chat/
+❯ code rocket.chat/
 ```
 
 you can find my template for `rocket.chat` here: https://github.com/chantisnake/chocolateyPackage/tree/master/rocketchatelectron-choco/rocket.chat
@@ -54,7 +54,6 @@ you can find my template for `rocket.chat` here: https://github.com/chantisnake/
 
 ```
 ❯ Update-InstallerPackage 'rocket.chat'
-
 ```
 
 ### 6. Pack, Test and Push
@@ -64,7 +63,6 @@ your package is lying safe and sound in `~\GithubRepos\chocolateyPackage\rocketc
 just 
 ```
 ❯ choco pack
-
 
 ❯ choco push
 ```
@@ -76,30 +74,14 @@ just
 
 ```
 ❯ Update-InstallerPackage 'rocket.chat'
-
 ```
 
 ### 2. pack, test and push
 
 ```
 ❯ choco pack
-Attempting to build package from 'rocket.chat.nuspec'.
-Successfully created package 'rocket.chat.1.3.1.nupkg'
-
 
 ❯ choco push
-Attempting to push rocket.chat.1.3.1.nupkg to https://chocolatey.org/
-rocket.chat 1.3.1 was pushed successfully to https://chocolatey.org/
-
-Your package may be subject to moderation. A moderator will review the
-package prior to acceptance. You should have received an email. If you
-don't hear back from moderators within 1-3 business days, please reply
-to the email and ask for status or use contact site admins on the
-package page to contact moderators.
-
-Please ensure your registered email address is correct and emails from
-chocolateywebadmin at googlegroups dot com are not being sent to your
-spam/junk folder.
 ```
 
 ### 3. DONE and DONE!
