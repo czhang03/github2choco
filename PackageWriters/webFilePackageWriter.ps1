@@ -122,7 +122,7 @@ function New-WebFileVersionPackage  {
 	
 }
 
-function Update-WebFilePackage {
+function Update-WebFileChocoPackage {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]

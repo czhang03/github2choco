@@ -97,7 +97,7 @@ function New-VsixVersionPackage  {
 	
 }
 
-function Update-VsixPackage {
+function Update-VsixChocoPackage {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]

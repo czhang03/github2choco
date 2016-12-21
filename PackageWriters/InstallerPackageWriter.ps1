@@ -144,7 +144,7 @@ function New-InstallerVersionPackage  {
 	
 }
 
-function Update-InstallerPackage {
+function Update-InstallerChocoPackage {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]

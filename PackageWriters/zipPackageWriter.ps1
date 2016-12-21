@@ -131,7 +131,7 @@ function New-ZipVersionPackage  {
 	
 }
 
-function Update-ZipPackage {
+function Update-ZipChocoPackage {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
