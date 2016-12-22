@@ -64,6 +64,11 @@ function Add-ZipToolsString {
 		{
 			Read-Host 'the 64 bit download url press enter to continue and press Ctrl-C to stop'
 		}
+
+		# no url found 
+		if (-Not($url32 -or $url64)) {
+			Write-Error -Category ResourceUnavailable -Message 'url of the download item not found in latest release'
+		}
 	}
 	
 	end 
@@ -119,13 +124,30 @@ function New-ZipVersionPackage  {
 	{
 		# create install scripts
 		if ($isSorceCode) {
-			Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -IsSourceCode
+			try 
+			{
+				Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -IsSourceCode -ErrorAction Stop
+			}
+			catch 
+			{
+				$packageUpdated = $false
+			}
+			
 		}
 		else {
-			Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit
+			try 
+			{
+				Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit -ErrorAction Stop
+			}
+			catch 
+			{
+				$packageUpdated = $false
+			}
 		}
 		Write-NuspecFile -SavePath $newPackagePath -packageName $packageName -version $newVersion -releaseNote $releaseNote -templatePath $templatePath
 		New-VersionLog -packagePath $packagePath -VersionNumber $newVersion
+
+		return $packageUpdated
 	}
 	
 	
@@ -155,19 +177,23 @@ function Update-ZipChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
-			New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			$packageUpdated = New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName 
 		}
 		else {
 			Write-Host 'remote and local version match, exiting...' -ForegroundColor Green
+			$packageUpdated = $false
 		}
 	}
 	# force execute
 	else {
 		Write-Warning 'Force executing'
-		New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		$packageUpdated = New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
 	}
 
 	# update the profile
 	$profile.$packageName.version = $remoteVersion
 	Save-Profile -localProfile $profile
+
+	# tell the upstream whether the package is updated
+	return $packageUpdated
 }
