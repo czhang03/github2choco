@@ -99,6 +99,10 @@ function Update-AllChocoPackages {
     
     .DESCRIPTION
         Update all the package inside `profile.json` and give you a list of package name of the package that is updated
+
+    .PARAMETER Force
+        Whether to force execute the update for all package.
+        See the doc for `Update-ChocoPackage` for more detail
     
     .OUTPUTS
         A list of package names of the package that has been updated
