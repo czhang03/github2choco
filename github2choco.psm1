@@ -40,7 +40,7 @@ function Update-ChocoPackage {
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [string] $packageName,
         [Parameter(Mandatory = $false)]
         [switch] $Force
