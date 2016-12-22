@@ -119,15 +119,7 @@ function New-WebFileVersionPackage  {
 	end 
 	{
 		# create install scripts
-		try {
-			Add-WebFileToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit
-		}
-		catch {
-			Write-Host "encounter the following error while updating package $packageName :" -ForegroundColor Red
-			Write-Host $_.Exception.Message
-			$packageUpdated = $false
-		}
-
+		Add-WebFileToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit
 		Write-NuspecFile -SavePath $newPackagePath -packageName $packageName -version $newVersion -releaseNote $releaseNote -templatePath $templatePath
 		New-VersionLog -packagePath $packagePath -VersionNumber $newVersion
 	}

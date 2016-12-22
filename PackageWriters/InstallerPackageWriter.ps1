@@ -139,18 +139,11 @@ function New-InstallerVersionPackage  {
 	end 
 	{
 		# create install scripts
-		try {
-			Add-InstallerToolsString -SavePath "$newPackagePath\tools" `
-										-packageName $packageName -githubRepo $GithubRepo `
-										-Regex32bit $Regex32bit -Regex64bit $Regex64bit `
-										-installerType $installerType -ScilentArg $ScilentArg
-		}
-		catch {
-			Write-Host "encounter the following error while updating package $packageName :" -ForegroundColor Red
-			Write-Host $_.Exception.Message
-			$packageUpdated = $false
-		}
-		
+		Add-InstallerToolsString -SavePath "$newPackagePath\tools" `
+									-packageName $packageName -githubRepo $GithubRepo `
+									-Regex32bit $Regex32bit -Regex64bit $Regex64bit `
+									-installerType $installerType -ScilentArg $ScilentArg
+									
 		Write-NuspecFile -SavePath $newPackagePath -packageName $packageName -version $newVersion -releaseNote $releaseNote -templatePath $templatePath
 		New-VersionLog -packagePath $packagePath -VersionNumber $newVersion
 	}

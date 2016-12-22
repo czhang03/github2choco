@@ -123,34 +123,13 @@ function New-ZipVersionPackage  {
 	end 
 	{
 		# create install scripts
-		if ($isSorceCode) {
-			try 
-			{
-				Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -IsSourceCode -ErrorAction Stop
-				# execute without error
-				$packageUpdated = $true
-			}
-			catch 
-			{ 
-				Write-Host "encounter the following error while updating package $packageName :" -ForegroundColor Red
-				Write-Host $_.Exception.Message
-				$packageUpdated = $false
-			}
-			
+		if ($isSorceCode) 
+		{
+			Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -IsSourceCode -ErrorAction Stop
 		}
-		else {
-			try 
-			{
-				Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit -ErrorAction Stop
-				# execute without error
-				$packageUpdated = $true
-			}
-			catch 
-			{
-				Write-Host "encounter the following error while updating package $packageName :" -ForegroundColor Red
-				Write-Host $_.Exception.Message
-				$packageUpdated = $false
-			}
+		else 
+		{
+			Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit -ErrorAction Stop
 		}
 		Write-NuspecFile -SavePath $newPackagePath -packageName $packageName -version $newVersion -releaseNote $releaseNote -templatePath $templatePath
 		New-VersionLog -packagePath $packagePath -VersionNumber $newVersion
