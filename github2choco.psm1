@@ -5,6 +5,39 @@ Get-ChildItem ./PackageWriters | ForEach-Object {. "./PackageWriters/$_"}
 
 
 function Update-ChocoPackage {
+    <#
+    .SYNOPSIS
+        Update a choco package
+    
+    .DESCRIPTION
+        Update a package that is in the `profile.json` and return whether the package is updated
+    
+    .OUTPUTS
+        A boolean value indicate whether the package is updated
+
+    .PARAMETER packageName
+        The name (id) of the package, it is the keys in `profile.json`
+
+    .PARAMETER Force
+        Whether to force execute the update.
+        Normal update stop when the remote version matches the local version,
+        but a force update will update the package to the latest release regardless of the version number
+        Notice if this parameter is applied, the output of this cmdlet will always be $true
+    
+    .EXAMPLE
+        PS C:\> Update-ChocoPackage you-get
+        update the package with name 'you-get' (if local is already on the latest release, this will just exit)
+
+    .EXAMPLE
+        PS C:\> Update-ChocoPackage you-get -Force
+        update the package with name 'you-get' to the latest release regardless of the version number
+    
+    .NOTES
+        This will only write the latest version, so it is possible that you may miss versions.
+        For example if your local version is on 1.0,
+        and on github there is 2.0 and 3.0, this cmdlet will update the package to 3.0 and miss 2.0
+    
+    #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
@@ -60,6 +93,25 @@ function Update-ChocoPackage {
 
 
 function Update-AllChocoPackages {
+    <#
+    .SYNOPSIS
+        Update all the choco package you created
+    
+    .DESCRIPTION
+        Update all the package inside `profile.json` and give you a list of package name of the package that is updated
+    
+    .OUTPUTS
+        A list of package names of the package that has been updated
+    
+    .EXAMPLE
+        PS C:\> Update-AllChocoPackage
+        This will just update all the choco package that is in your profile
+    
+    .NOTES
+        This just goes through the profile and invoke `Update-ChocoPackage` on each one.
+        Therefore reading the doc on `Update-ChocoPackage` may be helpfull
+    
+    #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $false)]
