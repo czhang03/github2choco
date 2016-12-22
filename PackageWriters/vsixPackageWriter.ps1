@@ -123,7 +123,8 @@ function Update-VsixChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
-			$packageUpdated = New-VsixVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			New-VsixVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			$packageUpdated = $true
 		}
 		else {
 			Write-Host 'remote and local version match, exiting...' -ForegroundColor Green
@@ -133,7 +134,8 @@ function Update-VsixChocoPackage {
 	# force execute
 	else {
 		Write-Warning 'Force executing'
-		$packageUpdated = New-VsixVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		New-VsixVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		$packageUpdated = $true
 	}
 
 	# update the profile

@@ -148,7 +148,8 @@ function Update-WebFileChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
-			$packageUpdated = New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			$packageUpdated = $true
 		}
 		else {
 			Write-Host 'remote and local version match, exiting...' -ForegroundColor Green
@@ -158,7 +159,8 @@ function Update-WebFileChocoPackage {
 	# force execute
 	else {
 		Write-Warning 'Force executing'
-		$packageUpdated = New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		$packageUpdated = $true
 	}
 
 	# update the profile

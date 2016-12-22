@@ -171,7 +171,8 @@ function Update-InstallerChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
-			$packageUpdated = New-InstallerVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			New-InstallerVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			$packageUpdated = $true
 		}
 		else {
 			Write-Host 'remote and local version match, exiting...' -ForegroundColor Green
@@ -181,7 +182,8 @@ function Update-InstallerChocoPackage {
 	# force execute
 	else {
 		Write-Warning 'Force executing'
-		$packageUpdated = New-InstallerVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		New-InstallerVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		$packageUpdated = $true
 	}
 
 	# update the profile

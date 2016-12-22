@@ -161,7 +161,8 @@ function Update-ZipChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
-			$packageUpdated = New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName 
+			New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName 
+			$packageUpdated = $true
 		}
 		else {
 			Write-Host 'remote and local version match, exiting...' -ForegroundColor Green
@@ -171,7 +172,8 @@ function Update-ZipChocoPackage {
 	# force execute
 	else {
 		Write-Warning 'Force executing'
-		$packageUpdated = New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		$packageUpdated = $true
 	}
 
 	# update the profile
