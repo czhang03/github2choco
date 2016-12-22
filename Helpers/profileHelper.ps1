@@ -49,12 +49,12 @@ function Read-ChocoProfile {
 	{
 		if (Test-Path $profileFullName) 
 		{
-			Write-Host 'profile found' -ForegroundColor Green	
+			Write-Verbose 'profile found'
 			$profile = Get-Content $profileFullName | ConvertFrom-Json
 		}
 		else 
 		{
-			Write-Host 'Profile Not Found, starting with an empty profile'
+			Write-Verbose 'Profile Not Found, starting with an empty profile'
 			$profile = New-Object -TypeName psobject
 		}	
 	}
