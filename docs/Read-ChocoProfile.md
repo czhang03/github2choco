@@ -12,7 +12,7 @@ This cmdlet reads your local profile
 ## SYNTAX
 
 ```
-Read-ChocoProfile
+Read-ChocoProfile [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,6 +30,9 @@ Read-ChocoProfile
 This will give you a PSobject converted from profile data
 
 ## PARAMETERS
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
