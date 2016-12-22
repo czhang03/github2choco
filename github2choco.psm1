@@ -30,7 +30,8 @@ function Update-ChocoPackage {
         Write-Verbose "the package Local Version is: $($profile.$packageName.version)"
         Write-Verbose "the package github repo is: $($profile.$packageName.githubRepo)"
         
-        try {
+        try 
+        {
              switch ($profile.$packageName.packageType) 
              {
                 'installer' {$packageUpdated = Update-InstallerChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
