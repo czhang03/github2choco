@@ -59,7 +59,7 @@ function Update-ChocoPackage {
 }
 
 
-function Update-AllChocoPackage {
+function Update-AllChocoPackages {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $false)]
