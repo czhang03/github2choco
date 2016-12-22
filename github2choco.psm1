@@ -85,23 +85,7 @@ function Update-AllChocoPackage {
         {
             foreach ($packageName in $packageNames) 
             {
-                # regular log
-                Write-Host ''
-                Write-Host ''
-
-                # verbose log
-                Write-Verbose "updating Package $packageName" 
-                Write-Verbose "the package Type is: $($profile.$packageName.packageType)"
-                Write-Verbose "the package Local Version is: $($profile.$packageName.version)"
-                Write-Verbose "the package github repo is: $($profile.$packageName.githubRepo)"
-
-                switch ($profile.$packageName.packageType) {
-                    'installer' { Update-InstallerChocoPackage -packageName $packageName}
-                    'vsix' {Update-VsixChocoPackage -packageName $packageName}
-                    'webFile' {Update-WebFileChocoPackage -packageName $packageName}
-                    'zip' {Update-ZipChocoPackage -packageName $packageName}
-                    Default {Write-Error "Package type not valid"}
-                }
+               Update-ChocoPackage -packageName $packageName 
             }
         }
         
