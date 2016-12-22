@@ -137,7 +137,7 @@ function Update-ZipChocoPackage {
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[string] $packageName,
 		[Parameter(Mandatory = $false)]
-		[switch] $Force
+		[bool] $Force
 	)
 	
 	

@@ -103,7 +103,7 @@ function Update-VsixChocoPackage {
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[string] $packageName,
 		[Parameter(Mandatory = $false)]
-		[switch] $Force
+		[bool] $Force
 	)
 	
 	
