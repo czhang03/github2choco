@@ -127,9 +127,13 @@ function New-ZipVersionPackage  {
 			try 
 			{
 				Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -IsSourceCode -ErrorAction Stop
+				# execute without error
+				$packageUpdated = $true
 			}
 			catch 
-			{
+			{ 
+				Write-Host "encounter the following error while updating package $packageName :" -ForegroundColor Red
+				Write-Host $_.Exception.Message
 				$packageUpdated = $false
 			}
 			
@@ -138,9 +142,13 @@ function New-ZipVersionPackage  {
 			try 
 			{
 				Add-ZipToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit -ErrorAction Stop
+				# execute without error
+				$packageUpdated = $true
 			}
 			catch 
 			{
+				Write-Host "encounter the following error while updating package $packageName :" -ForegroundColor Red
+				Write-Host $_.Exception.Message
 				$packageUpdated = $false
 			}
 		}
