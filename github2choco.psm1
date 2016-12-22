@@ -131,7 +131,7 @@ function Update-AllChocoPackages {
     process
     {
         # a list contain all the name of the updated packages
-        $UpdatedPackagesName = @()
+        $UpdatedPackagesName = New-Object System.Collections.ArrayList
 
         # force execute
         if ($Force) 
