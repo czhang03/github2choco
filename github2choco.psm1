@@ -43,15 +43,18 @@ function Update-ChocoPackage {
         }
         catch 
         {
-            Write-Host "the following Error encounterd while updating $packageName :"
-            Write-Host $_.Exception.Message
+            Write-Host ""
+            Write-Host "the following Error encounterd while updating $packageName :" -ForegroundColor Red
+            Write-Host $_.Exception.Message -ForegroundColor Red
+            $packageUpdated = $false
+            Write-Host "package update fail, see more info using parameter verbose" -ForegroundColor Yellow
         }
        
     }
     
     end
     {
-        
+        return $packageUpdated
     }
 }
 
@@ -71,12 +74,21 @@ function Update-AllChocoPackage {
     
     process
     {
+        # a list contain all the name of the updated packages
+        $UpdatedPackagesName = @()
+
         # force execute
         if ($Force) 
         {
             foreach ($packageName in $packageNames) 
             {
-                Update-ChocoPackage -packageName $packageName -Force
+                #update package
+                $packageUpdated = Update-ChocoPackage -packageName $packageName -Force
+                # add to the updated packages if the package is updated
+                if ($packageUpdated) 
+                {
+                    $UpdatedPackagesName.Add($packageName)
+                }
             }
         }
         
@@ -85,15 +97,20 @@ function Update-AllChocoPackage {
         {
             foreach ($packageName in $packageNames) 
             {
-               Update-ChocoPackage -packageName $packageName 
+                #update package
+                $packageUpdated = Update-ChocoPackage -packageName $packageName 
+                # add to the updated packages if the package is updated
+                if ($packageUpdated) 
+                {
+                    $UpdatedPackagesName.Add($packageName)
+                }
             }
         }
-        
-        
     }
     
     end
     {
-        
+        # tell the upstream which is updated
+        return $UpdatedPackagesName
     }
 }
