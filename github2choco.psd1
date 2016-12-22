@@ -72,7 +72,7 @@ RequiredModules = @('PSGitHub')
 FunctionsToExport = @()
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @("Update-ChocoPackage", "Update-AllChocoPackages")
+CmdletsToExport = @("Update-ChocoPackage", "Update-AllChocoPackages", "Read-ChocoProfile")
 
 # Variables to export from this module
 VariablesToExport = ''
@@ -107,7 +107,7 @@ PrivateData = @{
         IconUri = 'https://github.com/chantisnake/github2choco/blob/master/Logo/logo.jpg'
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'provide function "Update-ChocoPackage" and "Update-AllChocoPackages"'
+        ReleaseNotes = 'provide cmdlet "Update-ChocoPackage", "Update-AllChocoPackages" and "Read-ChocoProfile"'
 
     } # End of PSData hashtable
 
