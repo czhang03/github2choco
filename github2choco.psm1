@@ -30,13 +30,22 @@ function Update-ChocoPackage {
         Write-Verbose "the package Local Version is: $($profile.$packageName.version)"
         Write-Verbose "the package github repo is: $($profile.$packageName.githubRepo)"
         
-        switch ($profile.$packageName.packageType) {
-            'installer' {Update-InstallerChocoPackage -packageName $packageName -Force $Force}
-            'vsix' {Update-VsixChocoPackage -packageName $packageName -Force $Force}
-            'webFile' {Update-WebFileChocoPackage -packageName $packageName -Force $Force}
-            'zip' {Update-ZipChocoPackage -packageName $packageName -Force $Force}
-            Default {Write-Error "Package type not valid"}
+        try {
+             switch ($profile.$packageName.packageType) 
+             {
+                'installer' {$packageUpdated = Update-InstallerChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
+                'vsix' {$packageUpdated = Update-VsixChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
+                'webFile' {$packageUpdated = Update-WebFileChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
+                'zip' {$packageUpdated = Update-ZipChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
+                Default {Write-Error "Package type not valid"}
+            }
         }
+        catch 
+        {
+            Write-Host "the following Error encounterd while updating $packageName :"
+            Write-Host $_.Exception.Message
+        }
+       
     }
     
     end
