@@ -150,9 +150,6 @@ function Update-ZipChocoPackage {
 	)
 	
 	
-	# log
-	Write-Host ''
-	Write-Host ''
 	Write-Host "updating $packageName" -ForegroundColor Magenta
 
 	# load variable

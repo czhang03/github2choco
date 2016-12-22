@@ -160,10 +160,6 @@ function Update-InstallerChocoPackage {
 		[bool] $Force
 	)
 	
-	
-	# log
-	Write-Host ''
-	Write-Host ''
 	Write-Host "updating $packageName" -ForegroundColor Magenta
 
 	# load variable
