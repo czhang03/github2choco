@@ -4,7 +4,15 @@ the insane way to create and manage your chocolatey package
 
 **Please notice this package is still under development**
 
-## Dependency
+## Install
+
+you can install this module from PowerShell Gallery
+
+```
+Install-Module github2choco
+```
+
+### Dependency
 
 This module requires [PSGitHub](https://github.com/pcgeek86/PSGitHub).
 
