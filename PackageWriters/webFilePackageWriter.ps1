@@ -61,6 +61,11 @@ function Add-WebFileToolsString {
 		{
 			Read-Host 'the 64 bit download url press enter to continue and press Ctrl-C to stop'
 		}
+
+		# no url found 
+		if (-Not($url32 -or $url64)) {
+			Write-Error -Category ResourceUnavailable -Message 'url of the download item not found in latest release'
+		}
 	}
 	
 	end 
@@ -114,7 +119,15 @@ function New-WebFileVersionPackage  {
 	end 
 	{
 		# create install scripts
-		Add-WebFileToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit
+		try {
+			Add-WebFileToolsString -SavePath "$newPackagePath\tools" -packageName $packageName -githubRepo $GithubRepo -Regex32bit $Regex32bit -Regex64bit $Regex64bit
+		}
+		catch {
+			Write-Host "encounter the following error while updating package $packageName :" -ForegroundColor Red
+			Write-Host $_.Exception.Message
+			$packageUpdated = $false
+		}
+
 		Write-NuspecFile -SavePath $newPackagePath -packageName $packageName -version $newVersion -releaseNote $releaseNote -templatePath $templatePath
 		New-VersionLog -packagePath $packagePath -VersionNumber $newVersion
 	}
@@ -146,19 +159,23 @@ function Update-WebFileChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
-			New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+			$packageUpdated = New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
 		}
 		else {
 			Write-Host 'remote and local version match, exiting...' -ForegroundColor Green
+			$packageUpdated = $false
 		}
 	}
 	# force execute
 	else {
 		Write-Warning 'Force executing'
-		New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
+		$packageUpdated = New-WebFileVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
 	}
 
 	# update the profile
 	$profile.$packageName.version = $remoteVersion
 	Save-Profile -localProfile $profile
+
+	# tell the upstream whether the package is updated
+	return $packageUpdated
 }
