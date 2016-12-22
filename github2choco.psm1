@@ -166,3 +166,5 @@ function Update-AllChocoPackages {
         return $UpdatedPackagesName
     }
 }
+
+Export-ModuleMember  -Function @("Update-ChocoPackage", "Update-AllChocoPackages", "Read-ChocoProfile")
