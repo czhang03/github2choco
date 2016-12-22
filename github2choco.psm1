@@ -71,7 +71,7 @@ function Update-ChocoPackage {
                 'vsix' {$packageUpdated = Update-VsixChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
                 'webFile' {$packageUpdated = Update-WebFileChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
                 'zip' {$packageUpdated = Update-ZipChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
-                Default {Write-Error "Package type not valid"}
+                Default {Write-Error "Package type not valid for $packageName"}
             }
         }
         catch 
