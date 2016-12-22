@@ -18,6 +18,30 @@ you can set it up with the following command:
 ❯ Set-GitHubToken
 ```
 
+## Manage Existing Package
+
+### 1. update
+
+```
+❯ Update-ChocoPackage 'rocket.chat'
+```
+
+or simply
+
+```
+❯ Update-AllChocoPackages
+```
+
+### 2. pack, test and push
+
+```
+❯ choco pack
+
+❯ choco push
+```
+
+### 3. DONE and DONE!
+
 ## Create Package
 
 creating a package is super easy:
@@ -29,8 +53,8 @@ example:
 ```
 {
     "rocket.chat":  {
-                            "packagePath":  "$HOME\\GithubRepos\\chocolateyPackage\\rocketchatelectron-choco",
-                            "templatePath":  "$HOME\\GithubRepos\\chocolateyPackage\\rocketchatelectron-choco\\rocket.chat",
+                            "packagePath":  "~\\GithubRepos\\chocolateyPackage\\rocketchatelectron-choco",
+                            "templatePath":  "~\\GithubRepos\\chocolateyPackage\\rocketchatelectron-choco\\rocket.chat",
                             "version":  "",
                             "Regex64Bit":  "rocketchat-*-win32-x64.exe",
                             "githubRepo":  "RocketChat/Rocket.Chat.Electron",
@@ -67,7 +91,7 @@ you can find my template for `rocket.chat` here: https://github.com/chantisnake/
 ### 5. Let GitHub magic take care of it all!
 
 ```
-❯ Update-InstallerPackage 'rocket.chat'
+❯ Update-ChocoPackage 'rocket.chat'
 ```
 
 ### 6. Pack, Test and Push
@@ -81,21 +105,3 @@ just
 ❯ choco push
 ```
 
-
-## Manage Existing Package
-
-### 1. update
-
-```
-❯ Update-InstallerPackage 'rocket.chat'
-```
-
-### 2. pack, test and push
-
-```
-❯ choco pack
-
-❯ choco push
-```
-
-### 3. DONE and DONE!
