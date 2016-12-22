@@ -1,4 +1,4 @@
-function Read-LocalProfile {
+function Read-ChocoProfile {
 	<#
 	.SYNOPSIS
 		This cmdlet reads your local profile
@@ -9,7 +9,7 @@ function Read-LocalProfile {
 		when the profile does not exist, this function will return a empty psobject
 	
 	.EXAMPLE
-		PS C:\> Read-LocalProfile
+		PS C:\> Read-ChocoProfile
 		This will give you a PSobject converted from profile data
 	
 	.NOTES

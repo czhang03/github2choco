@@ -138,7 +138,7 @@ function Update-WebFileChocoPackage {
 	Write-Host "updating $packageName" -ForegroundColor Magenta
 
 	# load variable
-	$profile = Read-LocalProfile
+	$profile = Read-ChocoProfile
 	$localVersion = $profile.$packageName.version
 	$githubRepo = $profile.$packageName.githubRepo
 	$remoteVersion = Get-RemoteVersion -GithubRepo $githubRepo

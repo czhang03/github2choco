@@ -15,7 +15,7 @@ function Update-ChocoPackage {
     
     begin 
     {
-        $profile = Read-LocalProfile
+        $profile = Read-ChocoProfile
     }
     
     process
@@ -55,7 +55,7 @@ function Update-AllChocoPackage {
     
     begin 
     {
-        $profile = Read-LocalProfile
+        $profile = Read-ChocoProfile
         $packageNames = $profile | Get-Member -MemberType NoteProperty | ForEach-Object {$_.Name}
     }
     
