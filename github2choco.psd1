@@ -104,7 +104,7 @@ PrivateData = @{
         ProjectUri = 'https://github.com/chantisnake/github2choco'
 
         # A URL to an icon representing this module.
-        IconUri = 'https://github.com/chantisnake/github2choco/blob/master/Logo/logo.jpg'
+        IconUri = 'https://github.com/chantisnake/github2choco/raw/master/Logo/logo.jpg'
 
         # ReleaseNotes of this module
         ReleaseNotes = 'provide cmdlet "Update-ChocoPackage", "Update-AllChocoPackages" and "Read-ChocoProfile"'
