@@ -96,6 +96,83 @@ function Write-NuspecFile
 	end
 	{
 		# save the nuspec file
-		$nuspecFile.Save("$SavePath\$packageName.nuspec")
+		$absoluteNuspecFullName = [System.IO.Path]::GetFullPath("$SavePath\$packageName.nuspec")		
+		$nuspecFile.Save($absoluteNuspecFullName)
+	}
+}
+
+
+function Complete-NuspecTemplateFile {
+	[CmdletBinding()]
+	param (
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
+		[string] $NuspecFilePath,
+		[Parameter(Mandatory = $true, Position = 1)]
+		[string] $GithubRepo
+	)
+	
+	begin 
+	{
+		$xmlContent = [xml] (Get-Content $NuspecFilePath)
+		$Owner, $RepoName = Split-GithubRepoName $GithubRepo
+		$GithubRepoInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName
+	}
+	
+	process 
+	{
+		# extract information:
+		$RepoUrl = $GithubRepoInfo.html_url
+
+		$NuspecInfo = @{
+			authors = $GithubRepoInfo.owner.login
+			projectSourceUrl = $RepoUrl
+			projectUrl = $RepoUrl
+			title = $GithubRepoInfo.name
+			summary = $GithubRepoInfo.description
+			version = ''
+			releaseNotes = ''
+		}
+
+		if ($GithubRepoInfo.has_issues) 
+		{
+			$NuspecInfo.Add('bugTrackerUrl', "$RepoUrl/issues")
+		}
+		if ($GithubRepoInfo.has_wiki) 
+		{
+			$NuspecInfo.Add('docsUrl', "$RepoUrl/wikis")
+		}
+		
+		# write info to the nuspec file
+		foreach ($node in $NuspecInfo.GetEnumerator()) 
+		{
+			$elementName = $node.Name
+			$elementValue = $node.Value
+
+			Write-Verbose "processing node '$elementName', with value '$elementValue'"
+
+			if ($xmlContent.package.metadata.$elementName) 
+			{
+				Write-Verbose "Node found in the nuspec file"
+				$xmlContent.package.metadata.$elementName = $elementValue
+			}
+			else 
+			{
+				Write-Verbose "Node not found in nuspec file"
+
+				# creating a new node
+				$NewNode = $xmlContent.CreateElement($elementName, $xmlContent.DocumentElement.NamespaceURI)
+				$xmlContent.package.metadata.AppendChild($NewNode)
+
+				Write-Verbose "New Node successfully created"
+				$xmlContent.package.metadata.$elementName = $elementValue
+			}
+		} 
+	}
+	
+	end 
+	{
+		$absoluteNupecPath = [System.IO.Path]::GetFullPath("$pwd/$NuspecFilePath")
+		$xmlContent.Save($absoluteNupecPath)
+		Write-Verbose "nuspec file saved in $absoluteNupecPath"
 	}
 }
