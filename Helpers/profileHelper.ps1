@@ -16,7 +16,6 @@ function Read-ChocoProfile {
 		The profile is in the form that the PackageName maps to package properties,
 		the package property is also stored in a dictionary where property name maps to property value
 		Here is an example:
-		``` json
 		{
 			'PackageName1': {
 				'PackagePropertyName1': 'PackagePropertyValue1',
@@ -28,7 +27,6 @@ function Read-ChocoProfile {
 				'PackagePropertyName2' : 'PackagePropertyValue2'
 			}
 		}
-		```
 	
 	#>
 	[CmdletBinding()]
