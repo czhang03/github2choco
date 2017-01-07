@@ -1,8 +1,7 @@
 # load all the helpers
-Get-ChildItem ./Helpers | ForEach-Object {. "./Helpers/$_"}
+Get-ChildItem $PSScriptRoot/Helpers | ForEach-Object {. "$PSScriptRoot/Helpers/$_"}
 # load all the pakcage Writers
-Get-ChildItem ./PackageWriters | ForEach-Object {. "./PackageWriters/$_"}
-
+Get-ChildItem $PSScriptRoot/PackageWriters | ForEach-Object {. "$PSScriptRoot/PackageWriters/$_"}
 
 function Update-ChocoPackage {
     <#
