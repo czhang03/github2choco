@@ -39,8 +39,7 @@ function Read-ChocoProfile {
 	begin 
 	{
 		Write-Host ''
-		$profilePath = "$PSScriptRoot\.."
-		$profileFullName = "$profilePath\profile.json"	
+		$profileFullName = Get-ChocoProfileLocation
 		Write-Verbose "The profile's full name is $profileFullName"
 
 	}
@@ -93,8 +92,7 @@ function Save-Profile {
 	
 	begin 
 	{
-		$profilePath = "$PSScriptRoot\.."
-		$profileFullName = "$profilePath\profile.json"
+		$profileFullName = Get-ChocoProfileLocation
 		Write-Verbose "The profile's full name is $profileFullName"
 	}
 	
