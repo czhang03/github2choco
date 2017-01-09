@@ -160,8 +160,8 @@ function Complete-NuspecTemplateFile {
 				Write-Verbose "Node not found in nuspec file"
 
 				# creating a new node
-				$NewNode = $xmlContent.CreateElement($elementName, $xmlContent.DocumentElement.NamespaceURI)
-				$xmlContent.package.metadata.AppendChild($NewNode)
+				$NewNode = $xmlContent.CreateElement($elementName, $xmlContent.DocumentElement.NamespaceURI) | Out-Null
+				$xmlContent.package.metadata.AppendChild($NewNode) | Out-Null
 
 				Write-Verbose "New Node successfully created"
 				$xmlContent.package.metadata.$elementName = $elementValue
