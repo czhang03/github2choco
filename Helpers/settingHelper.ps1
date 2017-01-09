@@ -6,7 +6,7 @@ function Read-ChocoSetting {
     
     begin 
     {
-        $chocoSettingPath = "$PSScriptRoot/../.."
+        $chocoSettingPath = "$PSScriptRoot/.."
         Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($chocoSettingPath))"
     }
     
@@ -40,7 +40,7 @@ function Save-ChocoSetting {
     
     begin 
     {
-        $chocoSettingPath = "$PSScriptRoot/../.."
+        $chocoSettingPath = "$PSScriptRoot/.."
         Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($chocoSettingPath))"
     }
     
@@ -64,7 +64,7 @@ function New-ChocoSetting {
     
     begin 
     {
-        $chocoSettingPath = "$PSScriptRoot/../.."
+        $chocoSettingPath = "$PSScriptRoot/.."
         Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($chocoSettingPath))"
     }
     
