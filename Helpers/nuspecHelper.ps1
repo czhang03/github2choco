@@ -102,48 +102,25 @@ function Write-NuspecFile
 }
 
 
-function Complete-NuspecTemplateFile {
+function Add-XmlContent 
+{
 	[CmdletBinding()]
 	param (
-		[Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
-		[string] $NuspecFilePath,
+		[Parameter(Mandatory = $true, Position = 0)]
+		[System.Object] $hashMap,
 		[Parameter(Mandatory = $true, Position = 1)]
-		[string] $GithubRepo
+		[string] $xmlFilePath
 	)
 	
 	begin 
 	{
-		$xmlContent = [xml] (Get-Content $NuspecFilePath)
-		$Owner, $RepoName = Split-GithubRepoName $GithubRepo
-		$GithubRepoInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName
+		$xmlContent = [xml] (Get-Content $xmlFilePath)
 	}
 	
 	process 
 	{
-		# extract information:
-		$RepoUrl = $GithubRepoInfo.html_url
-
-		$NuspecInfo = @{
-			authors = $GithubRepoInfo.owner.login
-			projectSourceUrl = $RepoUrl
-			projectUrl = $RepoUrl
-			title = $GithubRepoInfo.name
-			summary = $GithubRepoInfo.description
-			version = ''
-			releaseNotes = ''
-		}
-
-		if ($GithubRepoInfo.has_issues) 
-		{
-			$NuspecInfo.Add('bugTrackerUrl', "$RepoUrl/issues")
-		}
-		if ($GithubRepoInfo.has_wiki) 
-		{
-			$NuspecInfo.Add('docsUrl', "$RepoUrl/wikis")
-		}
-		
 		# write info to the nuspec file
-		foreach ($node in $NuspecInfo.GetEnumerator()) 
+		foreach ($node in $hashMap.GetEnumerator()) 
 		{
 			$elementName = $node.Name
 			$elementValue = $node.Value
@@ -160,8 +137,8 @@ function Complete-NuspecTemplateFile {
 				Write-Verbose "Node not found in nuspec file"
 
 				# creating a new node
-				$NewNode = $xmlContent.CreateElement($elementName, $xmlContent.DocumentElement.NamespaceURI) | Out-Null
-				$xmlContent.package.metadata.AppendChild($NewNode) | Out-Null
+				$NewNode = $xmlContent.CreateElement($elementName, $xmlContent.DocumentElement.NamespaceURI)
+				$xmlContent.package.metadata.AppendChild($NewNode) 
 
 				Write-Verbose "New Node successfully created"
 				$xmlContent.package.metadata.$elementName = $elementValue
@@ -174,5 +151,74 @@ function Complete-NuspecTemplateFile {
 		$absoluteNupecPath = [System.IO.Path]::GetFullPath("$pwd/$NuspecFilePath")
 		$xmlContent.Save($absoluteNupecPath)
 		Write-Verbose "nuspec file saved in $absoluteNupecPath"
+	}
+}
+
+
+function Complete-NuspecTemplateFile 
+{
+	[CmdletBinding()]
+	param (
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
+		[string] $NuspecFilePath,
+		[Parameter(Mandatory = $true, Position = 1)]
+		[string] $GithubRepo
+	)
+	
+	begin 
+	{
+		$Owner, $RepoName = Split-GithubRepoName $GithubRepo
+
+		# get the information about the repo
+		$GithubRepoInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName
+		$GithubLicenseInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName -License
+		$GithubReadmeInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName -ReadMe
+
+		# load local setting info
+		$chocolateyId = Get-ChocolateyID
+		$packageUrl = Get-GTCPackageRepoUrl
+
+	}
+	
+	process 
+	{
+		# extract information:
+		$RepoUrl = $GithubRepoInfo.html_url
+		$licenseUrl = $GithubLicenseInfo.html_url
+		$ReadmeContent = Start-DownloadString -Url $GithubReadmeInfo.download_url
+
+		# consturct the hashMap
+		$NuspecInfo = @{
+			id = $GithubRepoInfo.name
+			version = ''
+			packageSourceUrl = $packageUrl
+			owners = $chocolateyId
+			title = $GithubRepoInfo.name
+			authors = $GithubRepoInfo.owner.login
+			licenseUrl = $licenseUrl
+			requireLicenseAcceptance = 'true'  # defaulted to true
+			projectSourceUrl = $RepoUrl
+			projectUrl = $RepoUrl
+			summary = $GithubRepoInfo.description
+			description = $ReadmeContent
+			releaseNotes = ''
+		}
+
+		if ($GithubRepoInfo.has_issues) 
+		{
+			$NuspecInfo.Add('bugTrackerUrl', "$RepoUrl/issues")
+		}
+		if ($GithubRepoInfo.has_wiki) 
+		{
+			$NuspecInfo.Add('docsUrl', "$RepoUrl/wikis")
+		}
+		
+		
+	}
+	
+	end 
+	{
+		# add the info in the hashMap to nuspec file
+		Add-XmlContent -hashMap $NuspecInfo -xmlFilePath $NuspecFilePath
 	}
 }
