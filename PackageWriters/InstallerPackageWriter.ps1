@@ -24,7 +24,7 @@ function Add-InstallerToolsString {
 			"Install-ChocolateyPackage -packageName '$packageName' "
 
         if ($installerType) {
-            $installStr += "-FileType $installerType"
+            $installStr += "-FileType $installerType "
             Write-Verbose "Add the installer type"
             Write-Verbose "the current install string is:"
             Write-Verbose "`t $installStr"
