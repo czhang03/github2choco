@@ -1,6 +1,6 @@
 # Road Map of github2choco
 
-- [ ] set the choco package path
+- [x] set the choco package path
 - [ ] add the `New-ChocoPackage` cmdlet to create new github2choco package
-- [ ] add the `Compelete-nuspecTemplate` to automatically fill nuspec file template
-- [ ] add `Set-ChocoProfileLocation` and `Get-GTCProfileLocation` cmdlet to change profile location
+- [x] add the `Compelete-nuspecTemplate` to automatically fill nuspec file template
+- [x] add `Set-ChocoProfileLocation` and `Get-GTCProfileLocation` cmdlet to change profile location
