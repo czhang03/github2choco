@@ -1,4 +1,4 @@
-function Read-ChocoProfile {
+function Read-GTCProfile {
 	<#
 	.SYNOPSIS
 		This cmdlet reads your local profile
@@ -9,7 +9,7 @@ function Read-ChocoProfile {
 		when the profile does not exist, this function will return a empty psobject
 	
 	.EXAMPLE
-		PS C:\> Read-ChocoProfile
+		PS C:\> Read-GTCProfile
 		This will give you a PSobject converted from profile data
 	
 	.NOTES
@@ -37,7 +37,7 @@ function Read-ChocoProfile {
 	begin 
 	{
 		Write-Host ''
-		$profileFullName = Get-ChocoProfileLocation
+		$profileFullName = Get-GTCProfileLocation
 		Write-Verbose "The profile's full name is $profileFullName"
 
 	}
@@ -63,7 +63,7 @@ function Read-ChocoProfile {
 }
 
 
-function Save-Profile {
+function Save-GTCProfile {
 	<#
 	.SYNOPSIS
 		This function takes a profile and save it
@@ -75,7 +75,7 @@ function Save-Profile {
 		the Profile Object (PSCustomObject) that is converted from profile file (a json file indicating all the property of the packages)
 
 	.EXAMPLE
-		PS C:\> Save-Profile -localProfile $profile
+		PS C:\> Save-GTCProfile -localProfile $profile
 		this converts the $profile to json and write to the profile file
 	
 	.NOTES
@@ -90,7 +90,7 @@ function Save-Profile {
 	
 	begin 
 	{
-		$profileFullName = Get-ChocoProfileLocation
+		$profileFullName = Get-GTCProfileLocation
 		Write-Verbose "The profile's full name is $profileFullName"
 	}
 	

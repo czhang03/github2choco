@@ -3,7 +3,7 @@ Get-ChildItem $PSScriptRoot/Helpers | ForEach-Object {. "$PSScriptRoot/Helpers/$
 # load all the pakcage Writers
 Get-ChildItem $PSScriptRoot/PackageWriters | ForEach-Object {. "$PSScriptRoot/PackageWriters/$_"}
 
-function Update-ChocoPackage {
+function Update-GTCPackage {
     <#
     .SYNOPSIS
         Update a choco package
@@ -24,11 +24,11 @@ function Update-ChocoPackage {
         Notice if this parameter is applied, the output of this cmdlet will always be $true
     
     .EXAMPLE
-        PS C:\> Update-ChocoPackage you-get
+        PS C:\> Update-GTCPackage you-get
         update the package with name 'you-get' (if local is already on the latest release, this will just exit)
 
     .EXAMPLE
-        PS C:\> Update-ChocoPackage you-get -Force
+        PS C:\> Update-GTCPackage you-get -Force
         update the package with name 'you-get' to the latest release regardless of the version number
     
     .NOTES
@@ -47,7 +47,7 @@ function Update-ChocoPackage {
     
     begin 
     {
-        $profile = Read-ChocoProfile
+        $profile = Read-GTCProfile
     }
     
     process
@@ -91,7 +91,7 @@ function Update-ChocoPackage {
 }
 
 
-function Update-AllChocoPackages {
+function Update-AllGTCPackage {
     <#
     .SYNOPSIS
         Update all the choco package you created
@@ -101,7 +101,7 @@ function Update-AllChocoPackages {
 
     .PARAMETER Force
         Whether to force execute the update for all package.
-        See the doc for `Update-ChocoPackage` for more detail
+        See the doc for `Update-GTCPackage` for more detail
     
     .OUTPUTS
         A list of package names of the package that has been updated
@@ -111,8 +111,8 @@ function Update-AllChocoPackages {
         This will just update all the choco package that is in your profile
     
     .NOTES
-        This just goes through the profile and invoke `Update-ChocoPackage` on each one.
-        Therefore reading the doc on `Update-ChocoPackage` may be helpfull
+        This just goes through the profile and invoke `Update-GTCPackage` on each one.
+        Therefore reading the doc on `Update-GTCPackage` may be helpfull
     
     #>
     [CmdletBinding()]
@@ -123,7 +123,7 @@ function Update-AllChocoPackages {
     
     begin 
     {
-        $profile = Read-ChocoProfile
+        $profile = Read-GTCProfile
         $packageNames = $profile | Get-Member -MemberType NoteProperty | ForEach-Object {$_.Name}
     }
     
@@ -138,7 +138,7 @@ function Update-AllChocoPackages {
             foreach ($packageName in $packageNames) 
             {
                 #update package
-                $packageUpdated = Update-ChocoPackage -packageName $packageName -Force
+                $packageUpdated = Update-GTCPackage -packageName $packageName -Force
                 # add to the updated packages if the package is updated
                 if ($packageUpdated) 
                 {
@@ -153,7 +153,7 @@ function Update-AllChocoPackages {
             foreach ($packageName in $packageNames) 
             {
                 #update package
-                $packageUpdated = Update-ChocoPackage -packageName $packageName 
+                $packageUpdated = Update-GTCPackage -packageName $packageName 
                 # add to the updated packages if the package is updated
                 if ($packageUpdated) 
                 {

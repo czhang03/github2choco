@@ -1,4 +1,4 @@
-function Read-ChocoSetting {
+function Read-GTCSetting {
     [CmdletBinding()]
     param (
         
@@ -31,7 +31,7 @@ function Read-ChocoSetting {
 }
 
 
-function Save-ChocoSetting {
+function Save-GTCSetting {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
@@ -56,7 +56,7 @@ function Save-ChocoSetting {
 }
 
 
-function New-ChocoSetting {
+function New-GTCSetting {
     [CmdletBinding()]
     param (
         
@@ -88,12 +88,12 @@ function New-ChocoSetting {
     
     end 
     {
-        Save-ChocoSetting -ChocoSettings $setting
+        Save-GTCSetting -ChocoSettings $setting
     }
 }
 
 
-function Get-ChocoPackagePath {
+function Get-GTCPackagePath {
     [CmdletBinding()]
     param (
         
@@ -101,7 +101,7 @@ function Get-ChocoPackagePath {
     
     begin 
     {
-        $chocoSettings = Read-ChocoSetting
+        $chocoSettings = Read-GTCSetting
         $defaultChocolateyPackagePath =  "$HOME/chocolateyPackage"
     }
     
@@ -128,7 +128,7 @@ function Get-ChocoPackagePath {
 }
 
 
-function Get-ChocoPackageRepoUrl {
+function Get-GTCPackageRepoUrl {
     [CmdletBinding()]
     param (
         
@@ -136,7 +136,7 @@ function Get-ChocoPackageRepoUrl {
     
     begin 
     {
-        $chocoSettings = Read-ChocoSetting
+        $chocoSettings = Read-GTCSetting
     }
     
     process 
@@ -162,7 +162,7 @@ function Get-ChocoPackageRepoUrl {
 }
 
 
-function Get-ChocoProfileLocation {
+function Get-GTCProfileLocation {
     [CmdletBinding()]
     param (
         
@@ -170,8 +170,8 @@ function Get-ChocoProfileLocation {
     
     begin 
     {
-        $chocoSettings = Read-ChocoSetting
-        $defualtChocoProfileLocation = "$(Get-ChocoPackagePath)/github2chocoProfile.json" 
+        $chocoSettings = Read-GTCSetting
+        $defualtChocoProfileLocation = "$(Get-GTCPackagePath)/github2chocoProfile.json" 
     }
     
     process 

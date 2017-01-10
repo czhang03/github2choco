@@ -54,8 +54,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### A list of package names of the package that has been updated
 
 ## NOTES
-This just goes through the profile and invoke \`Update-ChocoPackage\` on each one.
-Therefore reading the doc on \`Update-ChocoPackage\` may be helpfull
+This just goes through the profile and invoke \`Update-GTCPackage\` on each one.
+Therefore reading the doc on \`Update-GTCPackage\` may be helpfull
 
 ## RELATED LINKS
 

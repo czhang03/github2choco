@@ -31,13 +31,13 @@ you can set it up with the following command:
 ### 1. update
 
 ```
-❯ Update-ChocoPackage 'rocket.chat'
+❯ Update-GTCPackage 'rocket.chat'
 ```
 
 or simply
 
 ```
-❯ Update-AllChocoPackages
+❯ Update-AllGTCPackage
 ```
 
 ### 2. pack, test and push
@@ -99,7 +99,7 @@ you can find my template for `rocket.chat` here: https://github.com/chantisnake/
 ### 5. Let GitHub magic take care of it all!
 
 ```
-❯ Update-ChocoPackage 'rocket.chat'
+❯ Update-GTCPackage 'rocket.chat'
 ```
 
 ### 6. Pack, Test and Push

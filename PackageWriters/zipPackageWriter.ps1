@@ -153,7 +153,7 @@ function Update-ZipChocoPackage {
 	Write-Host "updating $packageName" -ForegroundColor Magenta
 
 	# load variable
-	$profile = Read-ChocoProfile
+	$profile = Read-GTCProfile
 	$localVersion = $profile.$packageName.version
 	$githubRepo = $profile.$packageName.githubRepo
 	$remoteVersion = Get-RemoteVersion -GithubRepo $githubRepo
@@ -178,7 +178,7 @@ function Update-ZipChocoPackage {
 
 	# update the profile
 	$profile.$packageName.version = $remoteVersion
-	Save-Profile -localProfile $profile
+	Save-GTCProfile -localProfile $profile
 
 	# tell the upstream whether the package is updated
 	return $packageUpdated
