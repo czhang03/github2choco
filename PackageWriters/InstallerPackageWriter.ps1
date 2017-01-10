@@ -24,7 +24,7 @@ function Add-InstallerToolsString {
 			"Install-ChocolateyPackage -packageName '$packageName' "
 
         if ($installerType) {
-            $installStr += "-FileType $installerType "
+            $installStr += "-FileType $installerType"
             Write-Verbose "Add the installer type"
             Write-Verbose "the current install string is:"
             Write-Verbose "`t $installStr"
@@ -40,16 +40,9 @@ function Add-InstallerToolsString {
 	process 
 	{
 		# get the url
-		if ($IsSourceCode) 
-		{
-			$url32 = Get-DownloadUrl -GithubRepo $githubRepo -isSourceCode
-		}
-		else 
-		{
-			$url32, $url64 = Get-DownloadUrl -GithubRepo $githubRepo `
+		$url32, $url64 = Get-DownloadUrl -GithubRepo $githubRepo `
 												-Regex32Bits $Regex32bit `
 												-Regex64Bits $Regex64bit
-		}
 
 		# assembles the install str
 		if ($url32) 
