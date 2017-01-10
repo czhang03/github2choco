@@ -170,4 +170,148 @@ function Update-AllGTCPackage {
     }
 }
 
+function New-GTCPackage 
+{
+    [CmdletBinding(DefaultParameterSetName = 'general')]
+    param (
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string] $githubRepo,
+        [Parameter(Mandatory = $true, Position = 1)]
+        [string] $packageType,
+        [Parameter(Mandatory = $false)]
+        [string] $packageName,
+        [Parameter(Mandatory = $false)]
+        [string] $packagePath,
+        [Parameter(Mandatory = $false)]
+        [string] $templatePath,
+        [Parameter(Mandatory = $false)]
+        [string] $Regex32Bit,
+        [Parameter(Mandatory = $false)]
+        [string] $Regex64Bit,
+        [Parameter(Mandatory = $false, ParameterSetName = 'zip')]
+        [switch] $isSourceCode,
+        [Parameter(Mandatory = $false, ParameterSetName = 'installer')]
+        [string] $installerType,
+        [Parameter(Mandatory = $false, ParameterSetName = 'installer')]
+        [string] $scilentArg
+    )
+    
+    begin 
+    {
+        $GTCProfile = Read-GTCProfile
+        $GTCProfileLocation = Get-GTCProfileLocation
+    }
+    
+    process 
+    {
+        ###### finish the profile setup ########
+
+        # set the initial property
+        $properties = 
+        @{
+            'githubRepo' = $githubRepo
+            'packageType' = $packageType
+            'version' = ''
+        }
+
+        $Owner, $RepoName = Split-GithubRepoName -GithubRepo $githubRepo
+
+        # get package name
+        if (-Not ($packageName)) 
+        {
+            $packageName = $RepoName
+        }
+
+        # get package path
+        if (-Not ($packagePath))
+        {
+            $packagePath = Join-Path -Path $(Get-GTCPackagePath) -ChildPath "$packageName-choco"
+            Write-Verbose "package path not provided using the Default:"
+            Write-Verbose $packagePath
+            $properties.Add('packagePath', $packagePath)
+        }
+        else 
+        {
+            $packagePath = Resolve-Path -Path $packagePath    
+            $properties.Add('packagePath', $packagePath)
+        }
+
+        # get template path
+        if ( -Not ($templatePath))
+        {
+            $templatePath = Join-Path -Path $packagePath -ChildPath 'template'
+            Write-Verbose "template path not provided using the Default:"
+            Write-Verbose $templatePath
+            $properties.Add('templatePath', $templatePath)
+        }
+        else 
+        {
+            $templatePath = Resolve-Path -Path $templatePath
+            $properties.Add('templatePath', $templatePath)
+        }
+
+        # add others:
+        if ($Regex32Bit) { $properties.Add('Regex32bit', $Regex32Bit) }
+        if ($Regex64Bit) { $properties.Add('Regex64bit', $Regex64Bit) }
+        if ($isSourceCode) {$properties.Add('sourceCode', $isSourceCode) }
+        if ($installerType) { $properties.Add('installerType', $installerType) }
+        if ($scilentArg) { $properties.Add('installerType', $installerType) }
+
+        # add package to profile 
+        Add-Member -InputObject $GTCProfile -memberType NoteProperty -Name $packageName -Value $properties
+
+        # save profile
+        Save-GTCProfile -localProfile $GTCProfile
+
+        ##### finish the new template #######
+
+        # get the path name and the folder name
+        $templateParentPath = Split-Path $templatePath -Parent
+        $templateFolderName = Split-Path $templatePath -Leaf
+
+        # create the package and template path
+        Write-Verbose "creating package path and the parent folder of templatePath"
+        if ($packagePath -ne $templateParentPath)
+        {
+            New-Item -Path $packagePath -ItemType Directory | Out-Null
+            New-Item -Path $templateParentPath -ItemType Directory | Out-Null
+        }
+        else 
+        {
+            New-Item -Path $packagePath -ItemType Directory | Out-Null
+        }
+        
+
+        # create the template folder
+        $CurrentLocation = Get-Location
+        Set-Location $templateParentPath
+        Write-Verbose "change directory to $templateParentPath"
+
+        Write-Verbose "starts to run `choco new` command"
+        choco.exe new $packageName | Out-Null
+        Write-Verbose "renaming the folder $templateParentPath\$packageName to $templatePath"
+        Rename-Item -LiteralPath "$templateParentPath\$packageName" -NewName $templateFolderName
+        
+        Write-Verbose "change the directory back to $CurrentLocation"
+        Set-Location $CurrentLocation
+
+        Write-Host "the template folder is sucessfully created" -ForegroundColor Green
+
+        # complete the nuspec file
+        Complete-NuspecTemplateFile `
+            -NuspecFilePath "$templatePath/$packageName.nuspec" -GithubRepo $githubRepo -packageName $packageName
+
+        Write-Host "the nuspec file is completed" -ForegroundColor Green
+        
+    }
+    
+    end     
+    {
+        Write-Host "the new package creation is completed" -ForegroundColor Green
+        Write-Warning "Please go to $templatePath to make sure the template is okay."
+        Write-Warning "Please go to $GTCProfileLocation to make sure profile is okay."
+        Write-Host "if both is okay for you, run `Update-AllChocoPackage` command to update your new package"
+    }
+}
+
 Export-ModuleMember -Function *

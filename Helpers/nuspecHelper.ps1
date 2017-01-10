@@ -148,7 +148,7 @@ function Add-XmlContent
 	
 	end 
 	{
-		$absoluteNupecPath = [System.IO.Path]::GetFullPath("$pwd/$NuspecFilePath")
+		$absoluteNupecPath = Resolve-Path -Path $xmlFilePath
 		$xmlContent.Save($absoluteNupecPath)
 		Write-Verbose "nuspec file saved in $absoluteNupecPath"
 	}
@@ -162,7 +162,9 @@ function Complete-NuspecTemplateFile
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
 		[string] $NuspecFilePath,
 		[Parameter(Mandatory = $true, Position = 1)]
-		[string] $GithubRepo
+		[string] $GithubRepo,
+		[Parameter(Mandatory = $true, Position = 2)]
+		[string] $packageName
 	)
 	
 	begin 
@@ -189,11 +191,11 @@ function Complete-NuspecTemplateFile
 
 		# consturct the hashMap
 		$NuspecInfo = @{
-			id = $GithubRepoInfo.name
+			id = $packageName
 			version = ''
 			packageSourceUrl = $packageUrl
 			owners = $chocolateyId
-			title = $GithubRepoInfo.name
+			title = $packageName
 			authors = $GithubRepoInfo.owner.login
 			licenseUrl = $licenseUrl
 			requireLicenseAcceptance = 'true'  # defaulted to true
