@@ -73,22 +73,51 @@ function New-GTCSetting {
         $setting = @{}
         
         # chocolatey package path
-        $chocolateyPackagePath = Read-Host "Please input your chocolatey package path: "
+        $chocolateyPackagePath = Read-Host "Please input your chocolatey package path"
         $setting.Add('chocolateyPackagePath', $chocolateyPackagePath)
 
         # chocolatey package repo url
-        $chocolateyPackageRepoUrl = Read-Host "Please input your chocolatey package repo url: "
+        $chocolateyPackageRepoUrl = Read-Host "Please input your chocolatey package repo url"
         $setting.Add('chocolateyPackageRepoUrl', $chocolateyPackageRepoUrl)
 
         # github2choco Profile location
-        $chocoProfileLocation = Read-Host "Please input your github2choco profile location (full name of the profile): "
-        $setting.Add('chocoProfileLocation', $chocoProfileLocation)
+        $GTCProfileLocation = Read-Host "Please input your github2choco profile location (full name of the profile)"
+        $setting.Add('GTCProfileLocation', $GTCProfileLocation)
+
+        # chocolatey id, (for the owner field)
+        $chocolateyId = Read-Host "Please input your chocolatey id"
+        $setting.Add('chocolateyId', $chocolateyId)
+
+
 
     }
     
     end 
     {
         Save-GTCSetting -ChocoSettings $setting
+    }
+}
+
+
+function Get-ChocolateyID 
+{
+    [CmdletBinding()]
+    param (
+        
+    )
+    
+    begin 
+    {
+        $Settings = Read-GTCSetting
+    }
+    
+    process 
+    {
+    }
+    
+    end 
+    {
+        return $Settings.chocolateyId
     }
 }
 
@@ -171,7 +200,7 @@ function Get-GTCProfileLocation {
     begin 
     {
         $chocoSettings = Read-GTCSetting
-        $defualtChocoProfileLocation = "$(Get-GTCPackagePath)/github2chocoProfile.json" 
+        $defualtGTCProfileLocation = "$(Get-GTCPackagePath)/github2chocoProfile.json" 
     }
     
     process 
@@ -181,16 +210,16 @@ function Get-GTCProfileLocation {
     
     end 
     {
-        if ($chocoSettings.chocoProfileLocation) 
+        if ($chocoSettings.GTCProfileLocation) 
         {
-            Write-Verbose "get choco profile location successful, the profile location is: $($chocoSettings.chocoProfileLocation)"
-            return $chocoSettings.chocoProfileLocation
+            Write-Verbose "get choco profile location successful, the profile location is: $($chocoSettings.GTCProfileLocation)"
+            return $chocoSettings.GTCProfileLocation
         }
         else 
         {
             Write-Warning 'get choco package path unsuccessful, use the defualt choco package path'
-            Write-Verbose "the defualt value is $defualtChocoProfileLocation"
-            return  $defualtChocoProfileLocation
+            Write-Verbose "the defualt value is $defualtGTCProfileLocation"
+            return  $defualtGTCProfileLocation
         }
         
     }
