@@ -138,7 +138,7 @@ function Add-XmlContent
 
 				# creating a new node
 				$NewNode = $xmlContent.CreateElement($elementName, $xmlContent.DocumentElement.NamespaceURI)
-				$xmlContent.package.metadata.AppendChild($NewNode) 
+				$xmlContent.package.metadata.AppendChild($NewNode) | Out-Null
 
 				Write-Verbose "New Node successfully created"
 				$xmlContent.package.metadata.$elementName = $elementValue
