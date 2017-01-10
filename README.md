@@ -67,7 +67,7 @@ example:
                             "Regex64Bit":  "rocketchat-*-win32-x64.exe",
                             "githubRepo":  "RocketChat/Rocket.Chat.Electron",
                             "installerType":  "exe",
-                            "scilentArg":  "/S",
+                            "silentArg":  "/S",
                             "packageType":  "installer"
                         }
 }

@@ -193,7 +193,7 @@ function New-GTCPackage
         [Parameter(Mandatory = $false, ParameterSetName = 'installer')]
         [string] $installerType,
         [Parameter(Mandatory = $false, ParameterSetName = 'installer')]
-        [string] $scilentArg
+        [string] $silentArg
     )
     
     begin 
@@ -255,7 +255,7 @@ function New-GTCPackage
         if ($Regex64Bit) { $properties.Add('Regex64bit', $Regex64Bit) }
         if ($isSourceCode) {$properties.Add('sourceCode', $isSourceCode) }
         if ($installerType) { $properties.Add('installerType', $installerType) }
-        if ($scilentArg) { $properties.Add('installerType', $installerType) }
+        if ($silentArg) { $properties.Add('silentArg', $silentArg) }
 
         # add package to profile 
         Add-Member -InputObject $GTCProfile -memberType NoteProperty -Name $packageName -Value $properties

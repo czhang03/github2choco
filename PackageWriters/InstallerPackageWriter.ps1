@@ -14,7 +14,7 @@ function Add-InstallerToolsString {
         [Parameter(Mandatory = $false)]
         [string] $installerType,
         [Parameter(Mandatory = $false)]
-        [string] $ScilentArg
+        [string] $silentArg
 	)
 	
 	begin 
@@ -29,8 +29,8 @@ function Add-InstallerToolsString {
             Write-Verbose "the current install string is:"
             Write-Verbose "`t $installStr"
         }
-        if ($ScilentArg) {
-            $installStr += "-SilentArgs '$ScilentArg' "
+        if ($silentArg) {
+            $installStr += "-SilentArgs '$silentArg' "
             Write-Verbose "add the scilent args"
             Write-Verbose "the current install string is:"
             Write-Verbose "`t $installStr"
@@ -112,7 +112,7 @@ function New-InstallerVersionPackage  {
 		$packagePath = $profile.$packageName.packagePath
 		$templatePath = $profile.$packageName.templatePath
 		$installerType = $profile.$packageName.installerType
-		$ScilentArg = $profile.$packageName.scilentArg
+		$silentArg = $profile.$packageName.silentArg
 	}
 	
 	process 
@@ -135,7 +135,7 @@ function New-InstallerVersionPackage  {
 		Add-InstallerToolsString -SavePath "$newPackagePath\tools" `
 									-packageName $packageName -githubRepo $GithubRepo `
 									-Regex32bit $Regex32bit -Regex64bit $Regex64bit `
-									-installerType $installerType -ScilentArg $ScilentArg
+									-installerType $installerType -silentArg $silentArg
 									
 		Write-NuspecFile -SavePath $newPackagePath -packageName $packageName -version $newVersion -releaseNote $releaseNote -templatePath $templatePath
 		New-VersionLog -packagePath $packagePath -VersionNumber $newVersion
