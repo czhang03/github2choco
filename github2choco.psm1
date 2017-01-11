@@ -232,7 +232,7 @@ function New-GTCPackage
         }
         else 
         {
-            $packagePath = Resolve-Path -Path $packagePath    
+            $packagePath = $(Resolve-Path -Path $packagePath).Path    
             $properties.Add('packagePath', $packagePath)
         }
 
@@ -246,7 +246,7 @@ function New-GTCPackage
         }
         else 
         {
-            $templatePath = Resolve-Path -Path $templatePath
+            $templatePath = $(Resolve-Path -Path $templatePath).Path
             $properties.Add('templatePath', $templatePath)
         }
 

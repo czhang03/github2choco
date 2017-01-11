@@ -74,7 +74,7 @@ function New-GTCSetting {
         
         # chocolatey package path
         $chocolateyPackagePath = Read-Host "Please input your chocolatey package path"
-        $setting.Add('chocolateyPackagePath', $(Resolve-Path -Path $chocolateyPackagePath))
+        $setting.Add('chocolateyPackagePath', $(Resolve-Path -Path $chocolateyPackagePath).Path)
 
         # chocolatey package repo url
         $chocolateyPackageRepoUrl = Read-Host "Please input your chocolatey package repo url"
@@ -82,7 +82,7 @@ function New-GTCSetting {
 
         # github2choco Profile location
         $GTCProfileLocation = Read-Host "Please input your github2choco profile location (full name of the profile)"
-        $setting.Add('GTCProfileLocation', $(Resolve-Path -Path $GTCProfileLocation))
+        $setting.Add('GTCProfileLocation', $(Resolve-Path -Path $GTCProfileLocation).Path)
 
         # chocolatey id, (for the owner field)
         $chocolateyId = Read-Host "Please input your chocolatey id"

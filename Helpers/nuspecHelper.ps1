@@ -148,7 +148,7 @@ function Add-XmlContent
 	
 	end 
 	{
-		$absoluteNupecPath = Resolve-Path -Path $xmlFilePath
+		$absoluteNupecPath = $(Resolve-Path -Path $xmlFilePath).Path
 		$xmlContent.Save($absoluteNupecPath)
 		Write-Verbose "nuspec file saved in $absoluteNupecPath"
 	}
