@@ -6,16 +6,16 @@ function Read-GTCSetting {
     
     begin 
     {
-        $chocoSettingPath = "$PSScriptRoot/../github2chocoSetting.json"
-        Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($chocoSettingPath))"
+        $GTCSettingPath = "$PSScriptRoot/../../github2chocoSetting.json"
+        Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($GTCSettingPath))"
     }
     
     process 
     {
-        if (Test-Path $chocoSettingPath) 
+        if (Test-Path $GTCSettingPath) 
         {
             Write-Verbose 'setting file found'
-            $settings = Get-Content $chocoSettingPath -Encoding UTF8 | ConvertFrom-Json
+            $settings = Get-Content $GTCSettingPath -Encoding UTF8 | ConvertFrom-Json
         }
         else 
         {
@@ -35,23 +35,23 @@ function Save-GTCSetting {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
-        [System.Object] $ChocoSettings
+        [System.Object] $GTCSettings
     )
     
     begin 
     {
-        $chocoSettingPath = "$PSScriptRoot/../github2chocoSetting.json"
-        Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($chocoSettingPath))"
+        $GTCSettingPath = "$PSScriptRoot/../../github2chocoSetting.json"
+        Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($GTCSettingPath))"
     }
     
     process 
     {
-        ConvertTo-Json $ChocoSettings | Out-File $chocoSettingPath -Encoding utf8
+        ConvertTo-Json $GTCSettings | Out-File $GTCSettingPath -Encoding utf8
     }
     
     end 
     {
-        Write-Verbose "the chocolatey profile is successfully saved to $([System.IO.Path]::GetFullPath($chocoSettingPath))"
+        Write-Verbose "the chocolatey profile is successfully saved to $([System.IO.Path]::GetFullPath($GTCSettingPath))"
     }
 }
 
@@ -64,8 +64,8 @@ function New-GTCSetting {
     
     begin 
     {
-        $chocoSettingPath = "$PSScriptRoot/../github2chocoSetting.json"
-        Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($chocoSettingPath))"
+        $GTCSettingPath = "$PSScriptRoot/../../github2chocoSetting.json"
+        Write-Verbose "the github2choco setting path is: $([System.IO.Path]::GetFullPath($GTCSettingPath))"
     }
     
     process 
@@ -94,7 +94,7 @@ function New-GTCSetting {
     
     end 
     {
-        Save-GTCSetting -ChocoSettings $setting
+        Save-GTCSetting -GTCSettings $setting
     }
 }
 
@@ -130,7 +130,7 @@ function Get-GTCPackagePath {
     
     begin 
     {
-        $chocoSettings = Read-GTCSetting
+        $GTCSettings = Read-GTCSetting
         $defaultChocolateyPackagePath =  "$HOME/chocolateyPackage"
     }
     
@@ -141,10 +141,10 @@ function Get-GTCPackagePath {
     
     end 
     {
-        if ($chocoSettings.chocolateyPackagePath) 
+        if ($GTCSettings.chocolateyPackagePath) 
         {
-            Write-Verbose "get choco package path successful, the path is: $($chocoSettings.chocolateyPackagePath)"
-            return $chocoSettings.chocolateyPackagePath
+            Write-Verbose "get choco package path successful, the path is: $($GTCSettings.chocolateyPackagePath)"
+            return $GTCSettings.chocolateyPackagePath
         }
         else 
         {
@@ -165,7 +165,7 @@ function Get-GTCPackageRepoUrl {
     
     begin 
     {
-        $chocoSettings = Read-GTCSetting
+        $GTCSettings = Read-GTCSetting
     }
     
     process 
@@ -175,10 +175,10 @@ function Get-GTCPackageRepoUrl {
     
     end 
     {
-        if ($chocoSettings.chocolateyPackageRepoUrl) 
+        if ($GTCSettings.chocolateyPackageRepoUrl) 
         {
-            Write-Verbose "get choco package repo url successful, the repo url is: $($chocoSettings.chocolateyPackagePath)"
-            return $chocoSettings.chocolateyPackageRepoUrl
+            Write-Verbose "get choco package repo url successful, the repo url is: $($GTCSettings.chocolateyPackagePath)"
+            return $GTCSettings.chocolateyPackageRepoUrl
         }
         else 
         {
@@ -199,7 +199,7 @@ function Get-GTCProfileLocation {
     
     begin 
     {
-        $chocoSettings = Read-GTCSetting
+        $GTCSettings = Read-GTCSetting
         $defualtGTCProfileLocation = "$(Get-GTCPackagePath)/github2chocoProfile.json" 
     }
     
@@ -210,10 +210,10 @@ function Get-GTCProfileLocation {
     
     end 
     {
-        if ($chocoSettings.GTCProfileLocation) 
+        if ($GTCSettings.GTCProfileLocation) 
         {
-            Write-Verbose "get choco profile location successful, the profile location is: $($chocoSettings.GTCProfileLocation)"
-            return $chocoSettings.GTCProfileLocation
+            Write-Verbose "get choco profile location successful, the profile location is: $($GTCSettings.GTCProfileLocation)"
+            return $GTCSettings.GTCProfileLocation
         }
         else 
         {
