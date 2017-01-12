@@ -213,6 +213,7 @@ function New-GTCPackage
             if (-Not ($packageName)) 
             {
                 $packageName = $RepoName
+                Write-Verbose "package name not provided using the repo name: $RepoName as the package name"
             }
 
             # get package path
