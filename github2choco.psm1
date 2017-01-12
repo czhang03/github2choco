@@ -200,6 +200,8 @@ function New-GTCPackage
     {
         $GTCProfile = Read-GTCProfile
         $GTCProfileLocation = Get-GTCProfileLocation
+
+        $Owner, $RepoName = Split-GithubRepoName -GithubRepo $githubRepo
     }
     
     process 
