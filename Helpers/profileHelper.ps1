@@ -106,6 +106,72 @@ function Save-GTCProfile {
 }
 
 
+function New-ProfileItem 
+{
+	[CmdletBinding()]
+	param (
+		[Parameter(Mandatory = $true, Position = 0)]
+        [string] $githubRepo,
+        [Parameter(Mandatory = $true, Position = 1)]
+        [string] $packageType,
+        [Parameter(Mandatory = $true)]
+        [string] $packageName,
+        [Parameter(Mandatory = $true)]
+        [string] $packagePath,
+        [Parameter(Mandatory = $true)]
+        [string] $templatePath,
+        [Parameter(Mandatory = $false)]
+        [string] $Regex32Bit,
+        [Parameter(Mandatory = $false)]
+        [string] $Regex64Bit,
+        [Parameter(Mandatory = $false)]
+        [bool] $isSourceCode,
+        [Parameter(Mandatory = $false)]
+        [string] $installerType,
+        [Parameter(Mandatory = $false)]
+        [string] $silentArg
+	)
+	
+	begin 
+	{
+		        # set the initial property
+        $properties = 
+        @{
+            'githubRepo' = $githubRepo
+            'packageType' = $packageType
+            'version' = ''
+			'packagePath' = $packagePath
+			'templatePath'= $templatePath
+        }
+
+        $Owner, $RepoName = Split-GithubRepoName -GithubRepo $githubRepo
+
+       
+	}
+	
+	process 
+	{
+
+        # add others:
+        if ($Regex32Bit) { $properties.Add('Regex32bit', $Regex32Bit) }
+        if ($Regex64Bit) { $properties.Add('Regex64bit', $Regex64Bit) }
+        if ($isSourceCode) {$properties.Add('sourceCode', $isSourceCode) }
+        if ($installerType) { $properties.Add('installerType', $installerType) }
+        if ($silentArg) { $properties.Add('silentArg', $silentArg) }
+
+        # add package to profile 
+        Add-Member -InputObject $GTCProfile -memberType NoteProperty -Name $packageName -Value $properties
+
+	}
+	
+	end 
+	{
+        # save profile
+        Save-GTCProfile -localProfile $GTCProfile
+	}
+}
+
+
 function New-VersionLog {
 	<#
 	.SYNOPSIS
