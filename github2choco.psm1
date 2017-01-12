@@ -244,7 +244,7 @@ function New-GTCPackage
 
             New-ProfileItem -githubRepo $githubRepo -packageType $packageType `
                             -packageName $packageName -packagePath $packagePath `
-                            -templatePath $templatePath -Regex32Bit $Regex32Bit -Regex64Bit $Regex64Bit`
+                            -templatePath $templatePath -Regex32Bit $Regex32Bit -Regex64Bit $Regex64Bit `
                             -isSourceCode $isSourceCode -silentArg $silentArg -installerType $installerType -ErrorAction Stop
 
             ##### finish the new template #######
