@@ -7,3 +7,5 @@
 - [ ] revert all previous change when an action is unsuccessful
 - [ ] better Write-Host message for Update-GTCPackage
 - [ ] better verbose output 
+- [ ] comment, comment, comment
+- [ ] update readme to reflect the latest feature
