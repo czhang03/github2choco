@@ -26,12 +26,20 @@ you can set it up with the following command:
 ❯ Set-GitHubToken
 ```
 
+### Setup
+
+all you need to do is just:
+
+```
+❯ New-GTCSetting 
+```
+
 ## Manage Existing Package
 
 ### 1. update
 
 ```
-❯ Update-GTCPackage 'rocket.chat'
+❯ Update-GTCPackage dnspy
 ```
 
 or simply
@@ -54,62 +62,36 @@ or simply
 
 creating a package is super easy:
 
-### 1. Add the package detail to `profile.json` in the package root:
-
-example:
-
+### 1. create the package template
 ```
-{
-    "rocket.chat":  {
-                            "packagePath":  "~\\GithubRepos\\chocolateyPackage\\rocketchatelectron-choco",
-                            "templatePath":  "~\\GithubRepos\\chocolateyPackage\\rocketchatelectron-choco\\rocket.chat",
-                            "version":  "",
-                            "Regex64Bit":  "rocketchat-*-win32-x64.exe",
-                            "githubRepo":  "RocketChat/Rocket.Chat.Electron",
-                            "installerType":  "exe",
-                            "silentArg":  "/S",
-                            "packageType":  "installer"
-                        }
-}
+❯ New-GTCPackage -githubRepo 0xd4d/dnSpy -packageType zip -Regex32Bit dnSpy.zip
 ```
 
+then make sure the template is okay (version and release note should be left blank in the nuspec file)
 
-### 2. Create the package path
+I personally will leave the install script nearly empty and deletes all the other files
 
-```
-❯ mkdir rocketchatelectron-choco
-```
 
-### 3. Create the template via `choco new`
+### 2. update the package
 
 ```
-❯ choco new rocket.chat
+❯ Update-GTCPackage dnspy 
 ```
 
+### 3. pack test and push
 
-### 4. Edit the template
-
-```
-❯ code rocket.chat/
-```
-
-you can find my template for `rocket.chat` here: https://github.com/chantisnake/chocolateyPackage/tree/master/rocketchatelectron-choco/rocket.chat
-
-
-### 5. Let GitHub magic take care of it all!
-
-```
-❯ Update-GTCPackage 'rocket.chat'
-```
-
-### 6. Pack, Test and Push
-
-your package is lying safe and sound in `~\GithubRepos\chocolateyPackage\rocketchatelectron-choco\Versions\`
-
-just 
 ```
 ❯ choco pack
 
 ❯ choco push
 ```
 
+
+## see it in action
+
+creating a new package template
+![](https://github.com/chantisnake/github2choco/raw/master/assets/readme_image/new_package.gif)
+
+
+update a single package
+![](https://github.com/chantisnake/github2choco/raw/master/assets/readme_image/update_package.gif)
