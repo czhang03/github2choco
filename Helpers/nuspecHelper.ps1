@@ -173,8 +173,23 @@ function Complete-NuspecTemplateFile
 
 		# get the information about the repo
 		$GithubRepoInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName
-		$GithubLicenseInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName -License
-		$GithubReadmeInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName -ReadMe
+		try 
+		{
+			$GithubLicenseInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName -License
+		}
+		catch 
+		{
+			$GithubLicenseInfo = $null
+		}
+		try 
+		{
+			$GithubReadmeInfo = Get-GitHubRepository -Owner $Owner -Repository $RepoName -ReadMe
+		}
+		catch 
+		{
+			$GithubReadmeInfo = $null
+		}
+		
 
 		# load local setting info
 		$chocolateyId = Get-ChocolateyID
@@ -186,8 +201,6 @@ function Complete-NuspecTemplateFile
 	{
 		# extract information:
 		$RepoUrl = $GithubRepoInfo.html_url
-		$licenseUrl = $GithubLicenseInfo.html_url
-		$ReadmeContent = Start-DownloadString -Url $GithubReadmeInfo.download_url
 
 		# consturct the hashMap
 		$NuspecInfo = @{
@@ -197,13 +210,20 @@ function Complete-NuspecTemplateFile
 			owners = $chocolateyId
 			title = $packageName
 			authors = $GithubRepoInfo.owner.login
-			licenseUrl = $licenseUrl
 			requireLicenseAcceptance = 'true'  # defaulted to true
 			projectSourceUrl = $RepoUrl
 			projectUrl = $RepoUrl
 			summary = $GithubRepoInfo.description
-			description = $ReadmeContent
 			releaseNotes = ''
+		}
+
+		if ($GithubLicenseInfo) 
+		{
+			$NuspecInfo.Add('licenseUrl', $GithubLicenseInfo.html_url)
+		}
+		if ($GithubReadmeInfo) 
+		{
+			$NuspecInfo.Add('description', $(Start-DownloadString -Url $GithubReadmeInfo.download_url) )
 		}
 
 		if ($GithubRepoInfo.has_issues) 
