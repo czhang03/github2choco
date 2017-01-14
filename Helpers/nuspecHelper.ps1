@@ -210,7 +210,6 @@ function Complete-NuspecTemplateFile
 			owners = $chocolateyId
 			title = $packageName
 			authors = $GithubRepoInfo.owner.login
-			requireLicenseAcceptance = 'true'  # defaulted to true
 			projectSourceUrl = $RepoUrl
 			projectUrl = $RepoUrl
 			summary = $GithubRepoInfo.description
@@ -220,6 +219,7 @@ function Complete-NuspecTemplateFile
 		if ($GithubLicenseInfo) 
 		{
 			$NuspecInfo.Add('licenseUrl', $GithubLicenseInfo.html_url)
+			$NuspecInfo.Add('requireLicenseAcceptance', 'true') 
 		}
 		if ($GithubReadmeInfo) 
 		{
