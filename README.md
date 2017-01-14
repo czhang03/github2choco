@@ -71,6 +71,8 @@ then make sure the template is okay (version and release note should be left bla
 
 I personally will leave the install script nearly empty and deletes all the other files
 
+see all my templates here: https://github.com/chantisnake/chocolateyPackage
+
 
 ### 2. update the package
 
@@ -89,9 +91,9 @@ I personally will leave the install script nearly empty and deletes all the othe
 
 ## see it in action
 
-creating a new package template
+#### creating a new package template
 ![](https://github.com/chantisnake/github2choco/raw/master/assets/readme_image/new_package.gif)
 
 
-update a single package
+#### update a single package
 ![](https://github.com/chantisnake/github2choco/raw/master/assets/readme_image/update_package.gif)
