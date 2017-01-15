@@ -286,6 +286,13 @@ function New-GTCPackage
                 -NuspecFilePath "$templatePath/$packageName.nuspec" -GithubRepo $githubRepo -packageName $packageName
 
             Write-Host "the nuspec file is completed" -ForegroundColor Green
+
+
+            ### end ###
+            Write-Host "the new package creation is completed" -ForegroundColor Green
+            Write-Warning "Please go to $templatePath to make sure the template is okay."
+            Write-Warning "Please go to $GTCProfileLocation to make sure profile is okay."
+            Write-Host "if both is okay for you, run `Update-AllChocoPackage` command to update your new package"
         }
         catch 
         {
@@ -295,15 +302,12 @@ function New-GTCPackage
             Write-Host "package creation fail, see more info using parameter verbose" -ForegroundColor Yellow
             return
         }
-        
+
     }
     
     end     
     {
-        Write-Host "the new package creation is completed" -ForegroundColor Green
-        Write-Warning "Please go to $templatePath to make sure the template is okay."
-        Write-Warning "Please go to $GTCProfileLocation to make sure profile is okay."
-        Write-Host "if both is okay for you, run `Update-AllChocoPackage` command to update your new package"
+        
     }
 }
 
