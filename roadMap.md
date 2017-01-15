@@ -9,3 +9,4 @@ x# Road Map of github2choco
 - [ ] better verbose output 
 - [ ] comment, comment, comment
 - [x] update readme to reflect the latest feature
+- [ ] add webfile full name and unzip location
