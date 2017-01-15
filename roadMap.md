@@ -1,4 +1,4 @@
-# Road Map of github2choco
+x# Road Map of github2choco
 
 - [x] set the choco package path
 - [x] add the `New-ChocoPackage` cmdlet to create new github2choco package
@@ -8,4 +8,4 @@
 - [ ] better Write-Host message for Update-GTCPackage
 - [ ] better verbose output 
 - [ ] comment, comment, comment
-- [ ] update readme to reflect the latest feature
+- [x] update readme to reflect the latest feature
