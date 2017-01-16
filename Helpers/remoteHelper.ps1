@@ -91,7 +91,7 @@ function Get-AssetsDownloadUrl {
 		this get the download url of the assets, which the name matches the regex provided
 
 	.DESCRIPTION
-		This cmdlet get the download url (browser_download_url of the release assets), the regex matching uses '-like' parameter of powershell
+		This cmdlet get the download url (browser_download_url of the release assets), the regex matching uses '-match' parameter of powershell
 
 	.EXAMPLE
 		explaination
@@ -137,7 +137,7 @@ function Get-AssetsDownloadUrl {
 	}
 
 	process {
-		$matchedAssets = $Assets | Where-Object {$_.name -like $Regex}
+		$matchedAssets = $Assets | Where-Object {$_.name -match $Regex}
 		Write-Verbose "here is all the assets matched the regex."
 		foreach ($Asset in $matchedAssets) 
 		{
