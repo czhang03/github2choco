@@ -28,6 +28,7 @@ function Add-VsixToolsString {
 		if ($url32) 
 		{
 			# get the hash for 32 bit assets and add it to the install str
+			Write-Host '32 bit assets found' -ForegroundColor Green
 			$hash32 = Get-DownloadFileHash -DownloadUrl $url32
 			$installStr += "-VsixUrl '$url32' -checksum '$hash32' -checksumType 'sha256'"
 			Write-Verbose "the download info is added to the install string"
@@ -35,7 +36,8 @@ function Add-VsixToolsString {
 		}
 		else 
 		{
-			Read-Host 'the 3download url press enter to continue and press Ctrl-C to stop'
+			Write-Warning '32 bit assets found'
+			Read-Host 'press enter to continue and press Ctrl-C to stop'
 		}
 
 		# no url found 
@@ -123,6 +125,7 @@ function Update-VsixChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
+			Write-Host "Updating to version $remoteVersion" -ForegroundColor Green
 			New-VsixVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
 			$packageUpdated = $true
 		}
@@ -134,6 +137,7 @@ function Update-VsixChocoPackage {
 	# force execute
 	else {
 		Write-Warning 'Force executing'
+		Write-Host "Updating to version $remoteVersion" -ForegroundColor Green
 		New-VsixVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
 		$packageUpdated = $true
 	}

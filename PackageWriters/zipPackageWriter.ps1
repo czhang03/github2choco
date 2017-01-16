@@ -42,6 +42,7 @@ function Add-ZipToolsString {
 		if ($url32) 
 		{
 			# get the hash for 32 bit assets and add it to the install str
+			Write-Host '32 bit assets found' -ForegroundColor Green
 			$hash32 = Get-DownloadFileHash -DownloadUrl $url32
 			$installStr += "-Url '$url32' -checksum '$hash32' -checksumType 'sha256'"
 			Write-Verbose "the 32 bit info is added to the install string"
@@ -49,11 +50,13 @@ function Add-ZipToolsString {
 		}
 		else 
 		{
-			Read-Host 'the 32 bit download url press enter to continue and press Ctrl-C to stop'
+			Write-Warning '32 bit assets found'
+			Read-Host 'press enter to continue and press Ctrl-C to stop'
 		}
 		if ($url64) 
 		{
 			# get the hash for 64 bit assets
+			Write-Host '64 bit assets found' -ForegroundColor Green
 			$hash64 = Get-DownloadFileHash -DownloadUrl $url64
 			# add the 64 bit infomation to install str
 			$installStr += "-Url64 '$url64' -checksum64 '$hash64' -checksumType64 'sha256'"
@@ -62,7 +65,8 @@ function Add-ZipToolsString {
 		}
 		else 
 		{
-			Read-Host 'the 64 bit download url press enter to continue and press Ctrl-C to stop'
+			Write-Warning '64 bit assets not found'
+			Read-Host 'press enter to continue and press Ctrl-C to stop'
 		}
 
 		# no url found 
@@ -161,6 +165,7 @@ function Update-ZipChocoPackage {
 	# execute if not force
 	if (-Not $Force) {
 		if($remoteVersion -ne $localVersion) {
+			Write-Host "Updating to version $remoteVersion" -ForegroundColor Green
 			New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName 
 			$packageUpdated = $true
 		}
@@ -172,6 +177,7 @@ function Update-ZipChocoPackage {
 	# force execute
 	else {
 		Write-Warning 'Force executing'
+		Write-Host "Updating to version $remoteVersion" -ForegroundColor Green
 		New-ZipVersionPackage -profile $profile -GithubRepo $githubRepo -packageName $packageName
 		$packageUpdated = $true
 	}
