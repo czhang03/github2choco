@@ -1,4 +1,4 @@
-x# Road Map of github2choco
+# Road Map of github2choco
 
 - [x] set the choco package path
 - [x] add the `New-ChocoPackage` cmdlet to create new github2choco package
