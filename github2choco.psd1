@@ -12,7 +12,7 @@
 RootModule = '.\github2choco.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0'
+ModuleVersion = '2.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -23,7 +23,7 @@ GUID = '59241a24-a23e-49b7-b65f-4f756164f426'
 # Author of this module
 Author = 'chantisnake'
 
-# Company or vendor of this module
+e# Company or vendor of this module
 CompanyName = 'Unknown'
 
 # Copyright statement for this module
@@ -33,7 +33,7 @@ Copyright = '(c) 2016 chantisnake. All rights reserved.'
 Description = 'create and manage your choco package like insane'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '5.0'
+gPowerShellVersion = '5.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -43,7 +43,7 @@ PowerShellVersion = '5.0'
 
 # Minimum version of Microsoft .NET Framework required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
 # DotNetFrameworkVersion = ''
-
+n
 # Minimum version of the common language runtime (CLR) required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
 # CLRVersion = ''
 
@@ -53,7 +53,7 @@ PowerShellVersion = '5.0'
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules = @('PSGitHub')
 
-# Assemblies that must be loaded prior to importing this module
+a# Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
@@ -63,7 +63,7 @@ RequiredModules = @('PSGitHub')
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-# FormatsToProcess = @()
+h# FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
@@ -107,7 +107,7 @@ PrivateData = @{
         IconUri = 'https://github.com/chantisnake/github2choco/raw/master/Logo/logo.jpg'
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'provide cmdlet "Update-GTCPackage", "Update-AllGTCPackage" and "Read-GTCProfile"'
+        ReleaseNotes = 'added more output when update, add gif in the discription, the regex32bit and regex64bit becomes real regex, setting location changed so that is will not be overwriten while update'
 
     } # End of PSData hashtable
 
