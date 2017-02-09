@@ -23,7 +23,7 @@ GUID = '59241a24-a23e-49b7-b65f-4f756164f426'
 # Author of this module
 Author = 'chantisnake'
 
-e# Company or vendor of this module
+# Company or vendor of this module
 CompanyName = 'Unknown'
 
 # Copyright statement for this module
@@ -33,7 +33,7 @@ Copyright = '(c) 2016 chantisnake. All rights reserved.'
 Description = 'create and manage your choco package like insane'
 
 # Minimum version of the Windows PowerShell engine required by this module
-gPowerShellVersion = '5.0'
+PowerShellVersion = '5.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -43,7 +43,7 @@ gPowerShellVersion = '5.0'
 
 # Minimum version of Microsoft .NET Framework required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
 # DotNetFrameworkVersion = ''
-n
+
 # Minimum version of the common language runtime (CLR) required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
 # CLRVersion = ''
 
@@ -53,7 +53,7 @@ n
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules = @('PSGitHub')
 
-a# Assemblies that must be loaded prior to importing this module
+# Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
@@ -63,7 +63,7 @@ a# Assemblies that must be loaded prior to importing this module
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-h# FormatsToProcess = @()
+# FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()
