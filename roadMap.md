@@ -1,4 +1,4 @@
-# Road Map of github2choco
+ # Road Map of github2choco
 
 - [x] set the choco package path
 - [x] add the `New-ChocoPackage` cmdlet to create new github2choco package
@@ -11,3 +11,4 @@
 - [x] update readme to reflect the latest feature
 - [ ] add webfile full name and unzip location
 - [ ] add compeletion
+- [ ] add unit test
