@@ -12,7 +12,7 @@
 RootModule = '.\github2choco.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.0'
+ModuleVersion = '2.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -107,7 +107,7 @@ PrivateData = @{
         IconUri = 'https://github.com/chantisnake/github2choco/raw/master/Logo/logo.jpg'
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'added more output when update, add gif in the discription, the regex32bit and regex64bit becomes real regex, setting location changed so that is will not be overwriten while update'
+        ReleaseNotes = 'allow empty string for release note'
 
     } # End of PSData hashtable
 
