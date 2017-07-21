@@ -76,6 +76,7 @@ function Write-NuspecFile
 		[Parameter(Mandatory = $true)]
 		[string] $version,
 		[Parameter(Mandatory = $true)]
+		[AllowEmptyString()]
 		[string] $releaseNote
 	)
 	
