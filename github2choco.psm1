@@ -7,10 +7,10 @@ function Update-GTCPackage {
     <#
     .SYNOPSIS
         Update a choco package
-    
+
     .DESCRIPTION
         Update a package that is in the `profile.json` and return whether the package is updated
-    
+
     .OUTPUTS
         A boolean value indicate whether the package is updated
 
@@ -22,7 +22,7 @@ function Update-GTCPackage {
         Normal update stop when the remote version matches the local version,
         but a force update will update the package to the latest release regardless of the version number
         Notice if this parameter is applied, the output of this cmdlet will always be $true
-    
+
     .EXAMPLE
         PS C:\> Update-GTCPackage you-get
         update the package with name 'you-get' (if local is already on the latest release, this will just exit)
@@ -30,12 +30,12 @@ function Update-GTCPackage {
     .EXAMPLE
         PS C:\> Update-GTCPackage you-get -Force
         update the package with name 'you-get' to the latest release regardless of the version number
-    
+
     .NOTES
         This will only write the latest version, so it is possible that you may miss versions.
         For example if your local version is on 1.0,
         and on github there is 2.0 and 3.0, this cmdlet will update the package to 3.0 and miss 2.0
-    
+
     #>
     [CmdletBinding()]
     param(
@@ -44,12 +44,12 @@ function Update-GTCPackage {
         [Parameter(Mandatory = $false)]
         [switch] $Force
     )
-    
-    begin 
+
+    begin
     {
         $profile = Read-GTCProfile
     }
-    
+
     process
     {
         # regular log
@@ -57,14 +57,14 @@ function Update-GTCPackage {
         Write-Host ''
 
         # verbose log
-        Write-Verbose "updating Package $packageName" 
+        Write-Verbose "updating Package $packageName"
         Write-Verbose "the package Type is: $($profile.$packageName.packageType)"
         Write-Verbose "the package Local Version is: $($profile.$packageName.version)"
         Write-Verbose "the package github repo is: $($profile.$packageName.githubRepo)"
-        
-        try 
+
+        try
         {
-             switch ($profile.$packageName.packageType) 
+             switch ($profile.$packageName.packageType)
              {
                 'installer' {$packageUpdated = Update-InstallerChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
                 'vsix' {$packageUpdated = Update-VsixChocoPackage -packageName $packageName -Force $Force -ErrorAction Stop}
@@ -73,7 +73,7 @@ function Update-GTCPackage {
                 Default {Write-Error "Package type not valid for $packageName"}
             }
         }
-        catch 
+        catch
         {
             Write-Host ""
             Write-Host "the following Error encounterd while updating $packageName :" -ForegroundColor Red
@@ -81,9 +81,9 @@ function Update-GTCPackage {
             $packageUpdated = $false
             Write-Host "package update fail, see more info using parameter verbose" -ForegroundColor Yellow
         }
-       
+
     }
-    
+
     end
     {
         return $packageUpdated
@@ -95,74 +95,74 @@ function Update-AllGTCPackage {
     <#
     .SYNOPSIS
         Update all the choco package you created
-    
+
     .DESCRIPTION
         Update all the package inside `profile.json` and give you a list of package name of the package that is updated
 
     .PARAMETER Force
         Whether to force execute the update for all package.
         See the doc for `Update-GTCPackage` for more detail
-    
+
     .OUTPUTS
         A list of package names of the package that has been updated
-    
+
     .EXAMPLE
         PS C:\> Update-AllChocoPackage
         This will just update all the choco package that is in your profile
-    
+
     .NOTES
         This just goes through the profile and invoke `Update-GTCPackage` on each one.
         Therefore reading the doc on `Update-GTCPackage` may be helpfull
-    
+
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $false)]
         [switch] $Force
     )
-    
-    begin 
+
+    begin
     {
         $profile = Read-GTCProfile
         $packageNames = $profile | Get-Member -MemberType NoteProperty | ForEach-Object {$_.Name}
     }
-    
+
     process
     {
         # a list contain all the name of the updated packages
-        $UpdatedPackagesName = New-Object System.Collections.ArrayList
+        $UpdatedPackagesName = @()
 
         # force execute
-        if ($Force) 
+        if ($Force)
         {
-            foreach ($packageName in $packageNames) 
+            foreach ($packageName in $packageNames)
             {
                 #update package
                 $packageUpdated = Update-GTCPackage -packageName $packageName -Force
                 # add to the updated packages if the package is updated
-                if ($packageUpdated) 
+                if ($packageUpdated)
                 {
                     $UpdatedPackagesName.Add($packageName)
                 }
             }
         }
-        
+
         # not force execute
-        else 
+        else
         {
-            foreach ($packageName in $packageNames) 
+            foreach ($packageName in $packageNames)
             {
                 #update package
-                $packageUpdated = Update-GTCPackage -packageName $packageName 
+                $packageUpdated = Update-GTCPackage -packageName $packageName
                 # add to the updated packages if the package is updated
-                if ($packageUpdated) 
+                if ($packageUpdated)
                 {
                     $UpdatedPackagesName.Add($packageName)
                 }
             }
         }
     }
-    
+
     end
     {
         # tell the upstream which is updated
@@ -170,7 +170,7 @@ function Update-AllGTCPackage {
     }
 }
 
-function New-GTCPackage 
+function New-GTCPackage
 {
     [CmdletBinding(DefaultParameterSetName = 'general')]
     param (
@@ -195,24 +195,24 @@ function New-GTCPackage
         [Parameter(Mandatory = $false, ParameterSetName = 'installer')]
         [string] $silentArg
     )
-    
-    begin 
+
+    begin
     {
         $GTCProfile = Read-GTCProfile
         $GTCProfileLocation = Get-GTCProfileLocation
 
         $Owner, $RepoName = Split-GithubRepoName -GithubRepo $githubRepo
     }
-    
-    process 
+
+    process
     {
 
-        try 
+        try
         {
             ###### finish the profile setup ########
 
             # get package name
-            if (-Not ($packageName)) 
+            if (-Not ($packageName))
             {
                 $packageName = $RepoName
                 Write-Verbose "package name not provided using the repo name: $RepoName as the package name"
@@ -225,9 +225,9 @@ function New-GTCPackage
                 Write-Verbose "package path not provided using the Default:"
                 Write-Verbose $packagePath
             }
-            else 
+            else
             {
-                $packagePath = $(Resolve-Path -Path $packagePath).Path    
+                $packagePath = $(Resolve-Path -Path $packagePath).Path
             }
 
             # get template path
@@ -237,7 +237,7 @@ function New-GTCPackage
                 Write-Verbose "template path not provided using the Default:"
                 Write-Verbose $templatePath
             }
-            else 
+            else
             {
                 $templatePath = $(Resolve-Path -Path $templatePath).Path
             }
@@ -260,11 +260,11 @@ function New-GTCPackage
                 New-Item -Path $packagePath -ItemType Directory | Out-Null
                 New-Item -Path $templateParentPath -ItemType Directory | Out-Null
             }
-            else 
+            else
             {
                 New-Item -Path $packagePath -ItemType Directory | Out-Null
             }
-            
+
 
             # create the template folder
             $CurrentLocation = Get-Location
@@ -275,7 +275,7 @@ function New-GTCPackage
             choco.exe new $packageName | Out-Null
             Write-Verbose "renaming the folder $templateParentPath\$packageName to $templatePath"
             Rename-Item -LiteralPath "$templateParentPath\$packageName" -NewName $templateFolderName
-            
+
             Write-Verbose "change the directory back to $CurrentLocation"
             Set-Location $CurrentLocation
 
@@ -294,7 +294,7 @@ function New-GTCPackage
             Write-Warning "Please go to $GTCProfileLocation to make sure profile is okay."
             Write-Host "if both is okay for you, run `Update-AllChocoPackage` command to update your new package"
         }
-        catch 
+        catch
         {
             Write-Host ""
             Write-Host "the following Error encounterd while creating package $packageName :" -ForegroundColor Red
@@ -304,10 +304,10 @@ function New-GTCPackage
         }
 
     }
-    
-    end     
+
+    end
     {
-        
+
     }
 }
 
