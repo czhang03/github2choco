@@ -142,7 +142,7 @@ function Update-AllGTCPackage {
                 # add to the updated packages if the package is updated
                 if ($packageUpdated)
                 {
-                    $UpdatedPackagesName.Add($packageName)
+                    $UpdatedPackagesName += $packageName
                 }
             }
         }
@@ -157,7 +157,7 @@ function Update-AllGTCPackage {
                 # add to the updated packages if the package is updated
                 if ($packageUpdated)
                 {
-                    $UpdatedPackagesName.Add($packageName)
+                    $UpdatedPackagesName += $packageName
                 }
             }
         }
